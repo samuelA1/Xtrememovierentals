@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 const config = require('./config');
 const express = require('express');
 const bodyParser = require('body-parser');
+const userRoutes = require('./routes/account')
 const cors = require('cors');
 const app = express();
 
@@ -16,7 +17,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(cors());
 
-
+app.use('/api/auth', userRoutes);
 
 app.listen(config.port, err => {
     console.log(`Listening on port ${config.port}`)
