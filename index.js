@@ -6,6 +6,7 @@ const authRoutes = require('./routes/auth')
 const userRoutes = require('./routes/account');
 const mainRoutes = require('./routes/main');
 const sellerRoutes = require('./routes/seller');
+const searchRoute = require('./routes/movie-search');
 const cors = require('cors');
 const app = express();
 
@@ -24,6 +25,7 @@ app.use('/api/auth', authRoutes);
 app.use('/api/account', userRoutes);
 app.use('/api', mainRoutes);
 app.use('/api/seller', sellerRoutes);
+app.use('/api/search', searchRoute);
 
 app.listen(config.port, err => {
     console.log(`Listening on port ${config.port}`)
