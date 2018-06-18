@@ -2,9 +2,13 @@ const express = require('express');
 const router = express.Router();
 const Genre = require('../models/genre');
 const Movie = require('../models/movie');
+const Review = require('../models/review');
+const Order = require('../models/order');
 const checkJwt = require('../middleware/check-jwt');
 const isAdmin = require('../middleware/is-admin');
 const async = require('async');
+const stripe = require('stripe')('sk_test_JhQBQU6jpKWVJgOr7vAz1PuO');
+
 
 router.route('/genre')
     .get((req, res, next) => {
@@ -66,6 +70,84 @@ router.route('/genre')
         })
     });
 
+router.get('/movie/:id', (req, res, next) => {
+    Movie.findById({_id: req.params.id})
+    .populate('genre')
+    .populate('reviews')
+    .populate('crew')
+    .exec((err, movie) => {
+        if (err) return next(err);
+
+        res.json({
+            success: true,
+            message: 'Enjoy',
+            movie: movie
+        });
+    });
+});
+
+router.post('review/:id', checkJwt, (req, res, next) => {
+        async.waterfall([
+            function(callback) {
+                Movie.findById(req.params.id, (err, movie) => {
+                    if (err) next(err);
+
+                    callback(err, movie);
+                })
+            },
+            function (movie) {
+                const review = new Review();
+                review.owner = req.decoded.user._id;
+                review.content = req.body.content;
+                review.rating = req.body.rating
+                
+                movie.reviews.push(review._id);
+                movie.save();
+                review.save();
+                res.json({
+                    success: true,
+                    message: 'Review successfully added'
+                });
+            }
+        ])
+    });
+
+    router.post('/payment', checkJWT, (req, res, next) => {
+        const stripeToken = req.body.stripeToken;
+        const currentCharges = Math.round(req.body.totalPrice * 100);
+      
+        stripe.customers
+          .create({
+            source: stripeToken.id
+          })
+          .then(function(customer) {
+            return stripe.charges.create({
+              amount: currentCharges,
+              currency: 'usd',
+              customer: customer.id
+            });
+          })
+          .then(function(charge) {
+            const movies = req.body.movies;
+      
+            let order = new Order();
+            order.owner = req.decoded.user._id;
+            order.totalPrice = currentCharges;
+            
+            movies.map(movie => {
+              order.movies.push({
+                movie: movie.movieId,
+                quantity: movie.quantity
+              });
+            });
+      
+            order.save();
+            res.json({
+              success: true,
+              message: "Successfully made a payment"
+            });
+          });
+      });
 
 
 module.exports = router

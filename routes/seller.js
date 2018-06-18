@@ -1,5 +1,6 @@
 const router = require('express').Router();
 const Movie = require('../models/movie');
+const Crew = require('../models/cast-crew');
 const checkJwt = require('../middleware/check-jwt');
 const async = require('async');
 
@@ -56,6 +57,8 @@ router.route('/movies')
   })
   .post([checkJwt, upload.array('product_picture')], (req, res) => {
       const movie = new Movie();
+      const crew = new Crew();
+
       movie.owner = req.decoded.user._id;
       movie.title = req.body.title;
       if (req.body.genreId != null && req.body.genreId2 != null) {
@@ -67,16 +70,33 @@ router.route('/movies')
       movie.description = req.body.description
       movie.image = req.files[0].location;
       movie.coverImage = req.files[1].location;
-      movie.numberInStockAsHd = movie.numberInStockAsHd + 1
+      if (req.body.asHd != 0) {
+        movie.numberInStockAsHd = movie.numberInStockAsHd + req.body.asHd;
+      } else {
+        movie.numberInStockAsBluRay = movie.numberInStockAsBluRay + req.body.asBluray;
+      }
       movie.contentRating = req.body.contentRating;
       movie.movieLength = req.body.movieLength;
+
+      if (req.body.director != null && req.body.director2 != null) {
+        crew.director.push(req.body.director, req.body.director2);
+      } else if (req.body.director != null && req.body.director2 == null || '') {
+        crew.director.push(req.body.director);
+      }
+      crew.actors.push(req.body.actor1, req.body.actor2,
+         req.body.actor3, req.body.actor4, req.body.actor5)
+
+      movie.crew = crew._id;
+
       movie.save();
+      crew.save();
       res.json({
         success: true,
         message: 'Movie successfully added',
         numberOfImagesUploaded: req.files.length
       });
   })
+  
   router.delete('/movie/:id', checkJwt, (req, res) => {
     Movie.findByIdAndRemove(req.params.id, (err) => {
       if (err) {

@@ -10,10 +10,26 @@ const MovieSchema = new Schema({
     coverImage: String,
     description: String,
     price: Number,
+    reviews: [{type: Schema.Types.ObjectId, ref: 'Review'}],
+    crew: {type: Schema.Types.ObjectId, ref: 'Crew'},
     contentRating: String,
     movieLength: String,
     numberInStockAsHd: {type: Number, default: 0},
     numberInStockAsBluRay: {type: Number, default: 0}
+}, {toJSON: {virtuals: true},
+    toObject: {virtuals: true}});
+
+MovieSchema.virtual('averageRating').get(function() {
+  let rating = 0;
+  if (this.reviews.length == 0) {
+    rating = 0;
+  } else {
+    this.reviews.map(review => {
+      rating += review.rating;
+    });
+    rating = rating / this.reviews.length;
+  }
+  return rating;
 });
 
 MovieSchema.plugin(algolia, {
