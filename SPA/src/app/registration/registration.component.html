@@ -1,3 +1,35 @@
-<p>
-  registration works!
-</p>
+<section id="registration">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-4 offset-lg-4">
+        <mat-card >
+          <form [formGroup]="registerForm">
+            <div class="registration-container">
+                <mat-form-field>
+                    <input matInput type="text" placeholder="Name"  required formControlName="name">
+                    <mat-error>Name is required</mat-error>
+                  </mat-form-field>
+                  <mat-form-field>
+                      <input type="email" matInput placeholder="Email"  required formControlName="email" >
+                      <mat-error> Email is required</mat-error>
+                  </mat-form-field>
+                  <mat-form-field>
+                      <input type="password" matInput placeholder="Password"  required formControlName="password" >
+                      <mat-error >Password is required</mat-error>
+                  </mat-form-field>
+                  <mat-form-field>
+                      <input type="password" matInput placeholder="Confirm Password" required  formControlName="confirmPassword">
+                      <mat-error >Confirm password is required</mat-error>
+                  </mat-form-field>
+                  <mat-checkbox color="primary" formControlName="isSeller">Register as Seller</mat-checkbox>
+                  <button type="submit" class="mt-5" mat-raised-button color="primary" [disabled]="!registerForm.valid">Register</button>
+            </div>
+          </form>
+        </mat-card>
+      </div>
+    </div>
+  </div>
+</section>
+
+<p>{{registerForm.value | json}}</p>
+<p>{{registerForm.valid | json}}</p>
