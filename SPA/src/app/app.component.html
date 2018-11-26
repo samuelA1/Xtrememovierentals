@@ -1,45 +1,47 @@
-<header>
-  <!-- Fixed navbar -->
-  <nav class="navbar navbar-expand-md navbar-dark fixed-top" style="background-color: #00bfff;">
-      <a class="navbar-brand" routerLink="/" class="navbar-brand">
-        <span class="logo">XMR</span>
-      </a>
-    <button class="navbar-toggler" (click)="toggleCollapse()" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" [class.show]="show" id="navbarCollapse">
-      <ul class="navbar-nav mr-auto">
-        <li routerLinkActive="active">
-          <a class="nav-link text-white" [routerLink]="['/']" >Movies</a>
-        </li>
-        <li routerLinkActive="active">
-          <a class="nav-link text-white" [routerLink]="['/']" >Genres</a>
-        </li>
-      </ul>
-      <form class="form-inline input-group w-50 mr-md-auto mt-2 mt-md-0">
-        <input class="form-control mr-sm-5" type="text" placeholder="Search" aria-label="Search">
-      </form>
-      <div class="dropdown sign" (click)="toggleSignIn()">
-          <a class="btn text-white dropdown-toggle" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            Sign In
-          </a>
-          <div class="dropdown-menu" aria-labelledby="dropdownMenuLink" [class.show]="signIn">
-            <a class="dropdown-item" [routerLink]="['/login']">Log In</a>
-            <a class="dropdown-item" [routerLink]="['/register']">Create Account</a>
+<div class="content">
+  <header>
+    <!-- Fixed navbar -->
+    <nav class="navbar navbar-expand-md navbar-dark fixed-top" style="background-color: #3f51b5;">
+        <a class="navbar-brand" routerLink="/" class="navbar-brand">
+          <span class="logo">XMR</span>
+        </a>
+      <button class="navbar-toggler" (click)="toggleCollapse()" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" [class.show]="show" id="navbarCollapse">
+        <ul class="navbar-nav mr-auto">
+          <li routerLinkActive="active">
+            <a class="nav-link text-white" [routerLink]="['/']" >Movies</a>
+          </li>
+          <li routerLinkActive="active">
+            <a class="nav-link text-white" [routerLink]="['/']" >Genres</a>
+          </li>
+        </ul>
+        <form class="form-inline input-group w-50 mr-md-auto mt-2 mt-md-0">
+          <input class="form-control mr-sm-5" type="text" placeholder="Search" aria-label="Search">
+        </form>
+        <div class="dropdown sign" (click)="toggleSignIn()">
+            <a class="btn text-white dropdown-toggle" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              Sign In
+            </a>
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuLink" [class.show]="signIn">
+              <a class="dropdown-item" [routerLink]="['/login']">Log In</a>
+              <a class="dropdown-item" [routerLink]="['/register']">Create Account</a>
+            </div>
           </div>
-        </div>
-    </div>
-  </nav>
-</header>
-
-<router-outlet></router-outlet>
-
-
-<!-- footer -->
-<footer id="main-footer" class="text-white footer pt-4">
-    <div class="container mt-4">
-      <p class="text-center">Copyright &copy; 2018 Xtreme Movie Rentals</p>
-      <p class="text-center">Made by <strong>Samuel Essim</strong></p>
-    </div>
-</footer>
+      </div>
+    </nav>
+  </header>
+  
+  <router-outlet></router-outlet>
+  
+  
+  <!-- footer -->
+  <footer id="main-footer" class="text-white footer pt-4">
+      <div class="container mt-4">
+        <p class="text-center">Copyright &copy; 2018 Xtreme Movie Rentals</p>
+        <p class="text-center">Made by <strong>Samuel Essim</strong></p>
+      </div>
+  </footer>
+</div>
   

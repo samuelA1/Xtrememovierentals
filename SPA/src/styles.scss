@@ -9,3 +9,7 @@ a:hover {
 .container {
     margin-top: 5em;
 }
+
+.content {
+    min-height: calc(100vh - 70px);
+}

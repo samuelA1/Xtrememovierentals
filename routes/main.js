@@ -112,7 +112,7 @@ router.post('review/:id', checkJwt, (req, res, next) => {
         ])
     });
 
-    router.post('/payment', checkJWT, (req, res, next) => {
+    router.post('/payment', checkJwt, (req, res, next) => {
         const stripeToken = req.body.stripeToken;
         const currentCharges = Math.round(req.body.totalPrice * 100);
       
