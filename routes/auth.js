@@ -28,7 +28,6 @@ router.post('/register', (req, res, next) => {
             res.json({
                 success: true,
                 message: 'Registration successful',
-                user: user,
                 token: token
             });
         }
@@ -57,7 +56,6 @@ router.post('/login', (req, res, next) => {
                     success: true,
                     message: 'Login successful',
                     token: token,
-                    user: user
             });
             }
         }

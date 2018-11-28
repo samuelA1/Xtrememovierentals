@@ -1,4 +1,7 @@
+import { AuthService } from './_services/auth.service';
 import { Component } from '@angular/core';
+import { JwtHelperService } from '@auth0/angular-jwt';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -8,6 +11,16 @@ import { Component } from '@angular/core';
 export class AppComponent {
   show:boolean = false;
   signIn = false;
+  helper = new JwtHelperService();
+
+  constructor(public authService: AuthService, private router: Router) {
+    this.persist();
+  }
+
+  persist () {
+    const token = localStorage.getItem('token');
+    this.authService.user = this.helper.decodeToken(token);
+  }
 
   toggleCollapse() {
     this.show = !this.show
@@ -15,5 +28,11 @@ export class AppComponent {
 
   toggleSignIn() {
     this.signIn = !this.signIn;
+  }
+
+  logOut() {
+    this.authService.user.user = {};
+    localStorage.clear();
+    this.router.navigate(['/login'])
   }
 }

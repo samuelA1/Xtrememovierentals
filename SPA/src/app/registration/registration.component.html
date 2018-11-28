@@ -4,6 +4,7 @@
       <div class="col-md-4 offset-md-4">
         <mat-card >
           <form [formGroup]="registerForm">
+            <div style="color:red" *ngIf="registerForm.hasError('mismatch') && registerForm.get('confirmPassword').touched">Passwords do not match</div>
             <div class="registration-container">
                 <mat-form-field>
                     <input matInput type="text" placeholder="Name"  required formControlName="name">
@@ -22,7 +23,7 @@
                       <mat-error >Confirm password is required</mat-error>
                   </mat-form-field>
                   <mat-checkbox color="primary" formControlName="isSeller">Register as Seller</mat-checkbox>
-                  <button type="submit" class="mt-5" mat-raised-button color="primary" [disabled]="!registerForm.valid">Register</button>
+                  <button type="button" class="mt-5" mat-raised-button color="primary" [disabled]="!registerForm.valid" (click)="register()">Register</button>
             </div>
           </form>
         </mat-card>

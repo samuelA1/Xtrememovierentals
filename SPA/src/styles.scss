@@ -1,15 +1,36 @@
 
 @import '~@angular/material/prebuilt-themes/indigo-pink.css';
+@import "../node_modules/alertifyjs/build/css/alertify.min.css";
+@import "../node_modules//alertifyjs/build/css/themes/bootstrap.min.css";
+
+* {
+    box-sizing: border-box;
+}
 
 a:hover {
     list-style: none;
     text-decoration: none;
 }
 
+a {
+    cursor: pointer;
+}
+
 .container {
     margin-top: 5em;
+    width: 100%;
+    max-width: 1400px;
 }
 
 .content {
     min-height: calc(100vh - 70px);
+}
+
+body {
+    font-family: Helvetica Neue,Helvetica,Arial,sans-serif;
+    font-size: 17px;
+    line-height: 1.3;
+    color: #fff;
+    background-color: #041c2c;
+
 }

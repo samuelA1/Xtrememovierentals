@@ -1,3 +1,4 @@
+import { AlertifyService } from './alertify.service';
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from '../../environments/environment';
@@ -12,7 +13,7 @@ user: any;
 helper = new JwtHelperService();
 
 
-constructor(private http: HttpClient) { }
+constructor(private http: HttpClient, private alertify: AlertifyService) { }
 
 get headers() {
 const token = localStorage.getItem('token');
@@ -20,22 +21,22 @@ return token ? new HttpHeaders().set('Authorization', token) : null;
 }
 
 async register(user: any) {
-    return this.http.post(this.apiUrl + 'register', user, {headers: this.headers}).toPromise()
+    return this.http.post(this.apiUrl + 'auth/register', user, {headers: this.headers}).toPromise()
     .then((res) => {
         this.user = this.helper.decodeToken(res['token'])
         return res;
     }).catch((error) => {
-        console.log(error.message);
+        this.alertify.error(error.message);
     })
 }
 
 async login(user: any) {
-    return this.http.post(this.apiUrl + 'register', user, {headers: this.headers}).toPromise()
+    return this.http.post(this.apiUrl + 'auth/login', user, {headers: this.headers}).toPromise()
     .then((res) => {
         this.user = this.helper.decodeToken(res['token'])
         return res;
     }).catch((error) => {
-        console.log(error.message);
+        this.alertify.error(error.message);
     })
 }
 

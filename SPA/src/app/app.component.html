@@ -20,7 +20,7 @@
         <form class="form-inline input-group w-50 mr-md-auto mt-2 mt-md-0">
           <input class="form-control mr-sm-5" type="text" placeholder="Search" aria-label="Search">
         </form>
-        <div class="dropdown sign" (click)="toggleSignIn()">
+        <div *ngIf="!authService.user?.user?.name" class="dropdown sign" (click)="toggleSignIn()">
             <a class="btn text-white dropdown-toggle" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               Sign In
             </a>
@@ -29,19 +29,28 @@
               <a class="dropdown-item" [routerLink]="['/register']">Create Account</a>
             </div>
           </div>
+          <div *ngIf="authService.user?.user?.name" class="dropdown sign" (click)="toggleSignIn()">
+            <a class="btn text-white dropdown-toggle" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              Hi {{authService.user?.user?.name | titlecase}}
+            </a>
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuLink" [class.show]="signIn">
+              <a class="dropdown-item" (click)="logOut()">Log Out</a>
+              <a class="dropdown-item" [routerLink]="['/register']">Create Account</a>
+            </div>
+          </div>
       </div>
     </nav>
   </header>
   
   <router-outlet></router-outlet>
-  
-  
-  <!-- footer -->
-  <footer id="main-footer" class="text-white footer pt-4">
-      <div class="container mt-4">
-        <p class="text-center">Copyright &copy; 2018 Xtreme Movie Rentals</p>
-        <p class="text-center">Made by <strong>Samuel Essim</strong></p>
-      </div>
-  </footer>
+
 </div>
+
+<!-- footer -->
+<footer id="main-footer" class="text-white footer pt-4">
+    <div class="container mt-4">
+      <p class="text-center">Copyright &copy; 2018 Xtreme Movie Rentals</p>
+      <p class="text-center">Made by <strong>Samuel Essim</strong></p>
+    </div>
+</footer>
   
