@@ -31,7 +31,7 @@ export class RegistrationComponent implements OnInit {
       email: ['', Validators.required],
       password: ['', Validators.required],
       confirmPassword: ['', Validators.required],
-      isSeller: ['']
+      isAdmin: ['']
     }, {validator: this.confirmPassword})
 
   }
@@ -41,7 +41,7 @@ export class RegistrationComponent implements OnInit {
       name: this.registerForm.get('name').value,
       email: this.registerForm.get('email').value,
       password: this.registerForm.get('password').value,
-      isSeller: this.registerForm.get('isSeller').value
+      isAdmin: this.registerForm.get('isAdmin').value
     });
     try {
       var user = await this.authService.register(this.user);

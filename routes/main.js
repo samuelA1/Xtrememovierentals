@@ -27,11 +27,23 @@ router.route('/genre')
 
         res.json({
             success: true,
-            message: 'Genre successfully added'
+            message: 'Genre successfully added',
+            genre: genre
         });
     });
 
-    router.get('/genres/:id', (req, res, next) => {
+    router.delete('/genre/:id', [checkJwt, isAdmin], (req, res, next) => {
+        Genre.findByIdAndDelete(req.params.id, (err) => {
+            if (err) throw err;
+
+            res.json({
+                success: true,
+                message: 'Genre successfully deleted'
+            })
+        })
+    })
+
+    router.get('/genre/:id', (req, res, next) => {
         const perPage = 10;
         const page = req.query.page;
         async.parallel([
@@ -113,40 +125,33 @@ router.post('review/:id', checkJwt, (req, res, next) => {
     });
 
     router.post('/payment', checkJwt, (req, res, next) => {
-        const stripeToken = req.body.stripeToken;
-        const currentCharges = Math.round(req.body.totalPrice * 100);
-      
-        stripe.customers
-          .create({
-            source: stripeToken.id
-          })
-          .then(function(customer) {
-            return stripe.charges.create({
-              amount: currentCharges,
-              currency: 'usd',
-              customer: customer.id
+        const currentCharges = req.body.totalPrice;
+        const movies = req.body.movies;
+    
+        let order = new Order();
+        order.owner = req.decoded.user._id;
+        order.totalPrice = currentCharges;
+        
+        movies.map(movie => {
+            order.movies.push({
+            movie: movie.movieId,
+            quantity: movie.quantity
             });
-          })
-          .then(function(charge) {
-            const movies = req.body.movies;
-      
-            let order = new Order();
-            order.owner = req.decoded.user._id;
-            order.totalPrice = currentCharges;
-            
-            movies.map(movie => {
-              order.movies.push({
-                movie: movie.movieId,
-                quantity: movie.quantity
-              });
-            });
-      
-            order.save();
-            res.json({
-              success: true,
-              message: "Successfully made a payment"
-            });
-          });
+            Movie.find({_id: movieId}, (err, video) => {
+                if (movie.asHd) {
+                    video.numberInStockAsHd -=1
+                } else if (movie.asBluRay) {
+                    video.numberInStockAsBluRay -=1
+                }
+            })
+        });
+    
+        order.save();
+        movie.save();
+        res.json({
+            success: true,
+            message: "Successfully made a payment"
+        });
       });
 
 

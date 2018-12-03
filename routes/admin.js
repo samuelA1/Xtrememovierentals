@@ -61,30 +61,31 @@ router.route('/movies')
 
       movie.owner = req.decoded.user._id;
       movie.title = req.body.title;
-      if (req.body.genreId != null && req.body.genreId2 != null) {
-        movie.genre.push(req.body.genreId, req.body.genreId2);
-      } else if (req.body.genreId != null && req.body.genreId2 == null || '') {
-        movie.genre.push(req.body.genreId);
+      if (req.body.genreId) {
+        req.body.genreId.forEach(genre => {
+          movie.genre.push(genre)
+        });
       }
       movie.price = req.body.price;
       movie.description = req.body.description
       movie.image = req.files[0].location;
       movie.coverImage = req.files[1].location;
-      if (req.body.asHd != 0) {
-        movie.numberInStockAsHd = movie.numberInStockAsHd + req.body.asHd;
-      } else {
-        movie.numberInStockAsBluRay = movie.numberInStockAsBluRay + req.body.asBluray;
-      }
+      if (req.body.asHd) movie.numberInStockAsHd = req.body.asHd;
+      if (req.body.asBluray) movie.numberInStockAsBluRay = req.body.asBluray;
+      
       movie.contentRating = req.body.contentRating;
       movie.movieLength = req.body.movieLength;
 
-      if (req.body.director != null && req.body.director2 != null) {
-        crew.director.push(req.body.director, req.body.director2);
-      } else if (req.body.director != null && req.body.director2 == null || '') {
-        crew.director.push(req.body.director);
+      if (req.body.director) {
+        req.body.director.forEach((director) => {
+          crew.director.push(director);
+        })
       }
-      crew.actors.push(req.body.actor1, req.body.actor2,
-         req.body.actor3, req.body.actor4, req.body.actor5)
+      if (req.body.actor) {
+        req.body.actor.forEach((actor) => {
+          crew.actors.push(actor);
+        })
+      }
 
       movie.crew = crew._id;
 
@@ -98,19 +99,39 @@ router.route('/movies')
   })
   
   router.delete('/movie/:id', checkJwt, (req, res) => {
-    Movie.findByIdAndRemove(req.params.id, (err) => {
-      if (err) {
-        res.json({
-          success: false,
-          message: 'Failed to delete movie'
-        });
-      } else {
-        res.json({
-          success: true,
-          message: 'Movie successfully deleted'
+    async.waterfall([
+      function(callback) {
+        Movie.find({_id: req.params.id}, (err, movie) => {
+          var crewId = movie.crew;
+          callback(err, crewId)
+        })
+      },
+      function(crewId) {
+        Movie.findByIdAndRemove(req.params.id, (err) => {
+          if (err) {
+            res.json({
+              success: false,
+              message: 'Failed to delete movie'
+            });
+          } else {
+
+            Crew.findByIdAndRemove(crewId, (err) => {
+              if (err) {
+                res.json({
+                  success: false,
+                  message: 'Failed to delete movie'
+                });
+              } else {
+                res.json({
+                  success: true,
+                  message: 'Movie successfully deleted'
+                })
+              }
+            })
+          }
         })
       }
-    })
+    ])
   });
 
 module.exports = router

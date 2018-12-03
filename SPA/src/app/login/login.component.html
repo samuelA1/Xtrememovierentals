@@ -16,6 +16,7 @@
                     <button type="button" class="mt-5" mat-raised-button color="primary" [disabled]="!loginForm.valid" (click)="login()">login</button>
               </div>
             </form>
+            <p class="mt-4">If not registered yet <b><a [routerLink]="['/register']" routerLinkActive="router-link-active" >Sign up</a></b></p>
           </mat-card>
         </div>
       </div>

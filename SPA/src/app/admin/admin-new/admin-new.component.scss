@@ -1,0 +1,22 @@
+.container {
+    background-color: white;
+    color: black;
+}
+
+.movie-container {
+    padding: 20px;
+}
+
+ul {
+    list-style-type: none;
+}
+
+li {
+    cursor: pointer;
+}
+
+@media screen and (min-width: 0px) and (max-width: 767px) {
+    .coverImage {
+        margin-top: 25px;
+    }
+}

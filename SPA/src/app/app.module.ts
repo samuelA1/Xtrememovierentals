@@ -1,3 +1,8 @@
+import { MovieService } from './_services/movie.service';
+import { AdminMoviesComponent } from './admin/admin-movies/admin-movies.component';
+import { AdminNewComponent } from './admin/admin-new/admin-new.component';
+import { AdminGuard } from './_guards/admin.guard';
+import { AdminEditComponent } from './admin/admin-edit/admin-edit.component';
 import { AlertifyService } from './_services/alertify.service';
 import { AuthService } from './_services/auth.service';
 import { BrowserModule } from '@angular/platform-browser';
@@ -29,7 +34,10 @@ import { LoginComponent } from './login/login.component';
     AppComponent,
     RegistrationComponent,
     HomeComponent,
-    LoginComponent
+    LoginComponent,
+    AdminEditComponent,
+    AdminNewComponent,
+    AdminMoviesComponent
 ],
   imports: [
     BrowserModule,
@@ -45,7 +53,7 @@ import { LoginComponent } from './login/login.component';
     MatButtonModule,
     MatDividerModule
   ],
-  providers: [AuthService, AlertifyService],
+  providers: [AuthService, AlertifyService, AdminGuard, MovieService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

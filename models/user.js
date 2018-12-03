@@ -9,7 +9,6 @@ const UserSchema = new Schema({
     picture: String,
     email: {type: String, unique: true, lowercase: true},
     isAdmin: {type: Boolean, default: false},
-    isSeller: {type: Boolean, default: false},
     created: {type: Date, default: Date.now},
     address: {
         addr1: String,

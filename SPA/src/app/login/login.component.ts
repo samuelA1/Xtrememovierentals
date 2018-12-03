@@ -41,7 +41,7 @@ createLogin() {
         
       }
     } catch (error) {
-      this.alertify.error(error.message || user['message']);
+      this.alertify.error( 'Login unsuccessful');
     }
 
   }
