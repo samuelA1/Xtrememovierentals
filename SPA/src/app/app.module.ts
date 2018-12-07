@@ -18,6 +18,7 @@ import {MatCheckboxModule} from '@angular/material/checkbox';
 import {MatButtonModule} from '@angular/material/button';
 import {MatDividerModule} from '@angular/material/divider';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
+import { PaginationModule } from 'ngx-bootstrap/pagination';
 
 
 
@@ -54,7 +55,8 @@ import { LoginComponent } from './login/login.component';
     MatCheckboxModule,
     MatButtonModule,
     MatDividerModule,
-    BsDatepickerModule.forRoot()
+    BsDatepickerModule.forRoot(),
+    PaginationModule.forRoot()
   ],
   providers: [AuthService, AlertifyService, AdminGuard, GenreService, MovieService],
   bootstrap: [AppComponent]

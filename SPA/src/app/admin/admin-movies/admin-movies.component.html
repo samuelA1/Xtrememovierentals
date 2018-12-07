@@ -1,3 +1,37 @@
-<p>
-  admin-movies works!
-</p>
+<div class="container">
+  <div class="row">
+    <div class="col-md justify-content-center">
+     <div>
+       <div><a [routerLink]="['/admin/admin-new']" class="btn btn-secondary mb-3" >
+        New movie</a></div>
+        <div class="form-group">
+            <input type="text" class="form-control" id="title" placeholder="Search movie..." 
+            name="title" [(ngModel)]="movie.title" (keyup)="searchMovies()">
+          </div>
+        <table class="table">
+            <thead>
+              <tr>
+                <th scope="col"></th>
+                <th scope="col">Title</th>
+                <th scope="col">Price to own</th>
+                <th scope="col">Price to rent</th>
+                <th scope="col"></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let movie of movies">
+                <td class="image"><img [src]="movie.image" alt="movie.title"></td>
+                <th scope="row">{{movie.title | titlecase}}</th>
+                <td>{{movie.price}}</td>
+                <td>{{movie.rentPrice}}</td>
+                <td><a href="">Edit</a></td>
+              </tr>
+            </tbody>
+          </table>
+          <div class="offset-md-5">
+              <pagination [totalItems]="totalItems" (pageChanged)="pageChanged($event)" [maxSize]="5"></pagination>
+          </div>
+     </div>
+    </div>
+  </div>
+</div>

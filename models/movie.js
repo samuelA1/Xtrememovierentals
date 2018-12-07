@@ -7,7 +7,6 @@ const MovieSchema = new Schema({
     title: String,
     genre: [{type: Schema.Types.ObjectId, ref: 'Genre'}],
     image: String,
-    coverImage: String,
     description: String,
     price: Number,
     rentPrice: Number,
@@ -23,7 +22,7 @@ const MovieSchema = new Schema({
 
 MovieSchema.virtual('averageRating').get(function() {
   let rating = 0;
-  if (this.reviews.length == 0) {
+  if (!this.reviews) {
     rating = 0;
   } else {
     this.reviews.map(review => {
@@ -38,7 +37,7 @@ MovieSchema.plugin(algolia, {
   appId: '45PFEO9EZL',
   apiKey: '8557f62f77a0d0d6e90e6ee2a9be8822',
   indexName: 'rentals',
-  selector: '_id title image coverImage',
+  selector: '_id title image rentPrice price',
   defaults: {
     author: 'uknown'
   },

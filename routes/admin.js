@@ -40,6 +40,7 @@ router.route('/movies')
         .skip(perPage * page)
         .populate('genre')
         .populate('owner')
+        .select(['owner','title', 'image', 'price', 'rentPrice'])
         .exec((err, movies) => {
           callback(err, movies)
         })

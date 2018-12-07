@@ -35,7 +35,8 @@
             </a>
             <div class="dropdown-menu" aria-labelledby="dropdownMenuLink" [class.show]="signIn">
               <a class="dropdown-item" (click)="logOut()">Log Out</a>
-              <a class="dropdown-item" [routerLink]="['/register']">Create Account</a>
+              <hr>
+              <a *ngIf="authService.user?.user?.isAdmin" class="dropdown-item" [routerLink]="['/admin/admin-movies']">Manage movies</a>
             </div>
           </div>
       </div>

@@ -21,4 +21,12 @@ export class MovieService {
     return this.http.post(this.apiUrl + 'admin/movies', movie, {headers: this.headers}).toPromise();
   }
 
+  getMovies(page) {
+    return this.http.get(this.apiUrl + `admin/movies?page=${page-1}`, {headers: this.headers}).toPromise();
+  }
+
+  searchMovies(page: any, word: string) {
+    return this.http.get(this.apiUrl + `search?query=${word}&page=${page-1}`, {headers: this.headers}).toPromise();
+  }
+
 }
