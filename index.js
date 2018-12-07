@@ -26,7 +26,7 @@ app.use(cors());
 app.use('/api/auth', authRoutes);
 app.use('/api/account', userRoutes);
 app.use('/api', mainRoutes);
-app.use('/api/seller', sellerRoutes);
+app.use('/api/admin', sellerRoutes);
 app.use('/api/search', searchRoute);
 
 app.listen(config.port, err => {

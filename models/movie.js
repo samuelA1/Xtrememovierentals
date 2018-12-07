@@ -10,12 +10,14 @@ const MovieSchema = new Schema({
     coverImage: String,
     description: String,
     price: Number,
+    rentPrice: Number,
     reviews: [{type: Schema.Types.ObjectId, ref: 'Review'}],
     crew: {type: Schema.Types.ObjectId, ref: 'Crew'},
     contentRating: String,
     movieLength: String,
     numberInStockAsHd: {type: Number, default: 0},
-    numberInStockAsBluRay: {type: Number, default: 0}
+    numberInStockAsBluRay: {type: Number, default: 0},
+    releaseDate: String
 }, {toJSON: {virtuals: true},
     toObject: {virtuals: true}});
 

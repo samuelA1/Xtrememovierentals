@@ -2,13 +2,14 @@ const router = require('express').Router();
 const Movie = require('../models/movie');
 const Crew = require('../models/cast-crew');
 const checkJwt = require('../middleware/check-jwt');
+const isAdmin = require('../middleware/is-admin');
 const async = require('async');
 
 const aws = require('aws-sdk');
 const multer = require('multer');
 const multerS3 = require('multer-s3');
-const s3 = new aws.S3({accessKeyId: 'AKIAJER55VHNGRSDMNQA', 
-                       secretAccessKey: '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'});
+const s3 = new aws.S3({accessKeyId: 'AKIAJZDTFCF42565X2AA', 
+                       secretAccessKey: '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'});
                        
 var upload = multer({
     storage: multerS3({
@@ -55,37 +56,38 @@ router.route('/movies')
       });
     });
   })
-  .post([checkJwt, upload.array('product_picture')], (req, res) => {
+  .post([checkJwt, isAdmin, upload.single('product_picture')], (req, res) => {
       const movie = new Movie();
       const crew = new Crew();
 
       movie.owner = req.decoded.user._id;
       movie.title = req.body.title;
-      if (req.body.genreId) {
-        req.body.genreId.forEach(genre => {
-          movie.genre.push(genre)
-        });
-      }
+
+      if (req.body['0']) movie.genre.push(req.body['0']);
+      if (req.body['1']) movie.genre.push(req.body['1']);
+      if (req.body['2']) movie.genre.push(req.body['2']);
+
       movie.price = req.body.price;
-      movie.description = req.body.description
-      movie.image = req.files[0].location;
-      movie.coverImage = req.files[1].location;
-      if (req.body.asHd) movie.numberInStockAsHd = req.body.asHd;
-      if (req.body.asBluray) movie.numberInStockAsBluRay = req.body.asBluray;
-      
+      if (req.body.price) movie.rentPrice = req.body.price - 2.11
+      movie.description = req.body.description;
+      movie.image = req.file.location;
+
+      if (req.body.asHd) movie.numberInStockAsHd = req.body.numberInStockAsHd;
+      if (req.body.asBluRay) movie.numberInStockAsBluRay = req.body.numberInStockAsHd;
+
       movie.contentRating = req.body.contentRating;
       movie.movieLength = req.body.movieLength;
 
-      if (req.body.director) {
-        req.body.director.forEach((director) => {
-          crew.director.push(director);
-        })
-      }
-      if (req.body.actor) {
-        req.body.actor.forEach((actor) => {
-          crew.actors.push(actor);
-        })
-      }
+      if(req.body.director1) crew.directors.push(req.body.director1);
+      if(req.body.director2) crew.directors.push(req.body.director2);
+
+      if (req.body.actor1) crew.actors.push(req.body.actor1);
+      if (req.body.actor2) crew.actors.push(req.body.actor2);
+      if (req.body.actor3) crew.actors.push(req.body.actor3);
+      if (req.body.actor4) crew.actors.push(req.body.actor4);
+      if (req.body.actor5) crew.actors.push(req.body.actor5);
+
+      if (req.body.Date) movie.releaseDate = req.body.Date;
 
       movie.crew = crew._id;
 
@@ -94,7 +96,6 @@ router.route('/movies')
       res.json({
         success: true,
         message: 'Movie successfully added',
-        numberOfImagesUploaded: req.files.length
       });
   })
   

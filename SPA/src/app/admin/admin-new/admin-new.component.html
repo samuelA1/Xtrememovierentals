@@ -43,7 +43,15 @@
                   </div>
                 </div>
                 <hr>
-              <h6>Select genres <small class="text-muted">Do not select more than three genres</small></h6>
+                <div class="form-row">
+                  <div class="form-group col-xs-12 col-12 col-md-4">
+                    <label for="releaseDate">Release date</label>
+                    <input type="text" class="form-control" id="releaseDate" placeholder="Enter movie Release Date" 
+                    name="releaseDate" [(ngModel)]="movie.Date" bsDatepicker [bsValue]="bsValue" [bsConfig]="bsConfig">
+                  </div>
+                </div>
+              <hr>
+              <h6>Select genres <small class="text-muted">Do not select more than three genres. Only the first three will be accepted</small></h6>
               <div *ngFor="let genre of genres" class="form-check form-check-inline">
                   <input class="form-check-input" type="checkbox" id="{{genre._id}}" value="{{genre._id}}"
                    name="genre" [(ngModel)]="genre.checked">
@@ -52,15 +60,11 @@
               <br>
               <br>
               <hr>
-              <label>Choose movie image and cover image respectively</label>
+              <label>Choose movie image</label>
               <div class="form-row">
                   <div class="custom-file form-group col-md mr-2">
                       <label>Upload Image</label>
                       <input type="file" class="form-control-file" accept="image/*" name="file" (change)="fileChange($event)">
-                  </div>
-                  <div class="custom-file form-group col-md mr-2">
-                      <label class="coverImage">Upload Cover Image</label>
-                      <input type="file" class="form-control-file" accept="image/*" name="file" (change)="coverImage($event)">
                   </div>
                   <br>
               </div>

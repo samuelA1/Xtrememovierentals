@@ -22,14 +22,24 @@ router.route('/genre')
     })
     .post([checkJwt, isAdmin], (req, res, next) => {
         const genre = new Genre();
-        genre.name = req.body.name
-        genre.save();
+        genre.name = req.body.name;
 
-        res.json({
-            success: true,
-            message: 'Genre successfully added',
-            genre: genre
-        });
+        Genre.findOne({name: req.body.name}, (err, genreExist) => {
+            if (genreExist) {
+                res.json({
+                    success: false,
+                    message: 'This genre already exist'
+                })
+            } else {
+                genre.save();
+                res.json({
+                    success: true,
+                    message: 'Genre successfully added',
+                    genre: genre
+                });
+            }
+        })
+        
     });
 
     router.delete('/genre/:id', [checkJwt, isAdmin], (req, res, next) => {

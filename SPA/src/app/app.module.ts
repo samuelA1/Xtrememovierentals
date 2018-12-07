@@ -1,4 +1,5 @@
 import { MovieService } from './_services/movie.service';
+import { GenreService } from './_services/genre.service';
 import { AdminMoviesComponent } from './admin/admin-movies/admin-movies.component';
 import { AdminNewComponent } from './admin/admin-new/admin-new.component';
 import { AdminGuard } from './_guards/admin.guard';
@@ -16,6 +17,7 @@ import {MatInputModule} from '@angular/material/input';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import {MatButtonModule} from '@angular/material/button';
 import {MatDividerModule} from '@angular/material/divider';
+import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 
 
 
@@ -51,9 +53,10 @@ import { LoginComponent } from './login/login.component';
     MatInputModule,
     MatCheckboxModule,
     MatButtonModule,
-    MatDividerModule
+    MatDividerModule,
+    BsDatepickerModule.forRoot()
   ],
-  providers: [AuthService, AlertifyService, AdminGuard, MovieService],
+  providers: [AuthService, AlertifyService, AdminGuard, GenreService, MovieService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
