@@ -29,4 +29,8 @@ export class MovieService {
     return this.http.get(this.apiUrl + `search?query=${word}&page=${page-1}`, {headers: this.headers}).toPromise();
   }
 
+  singleMovie(movieId: any) {
+    return this.http.get(this.apiUrl + 'movie/' + movieId, {headers: this.headers}).toPromise();
+  }
+ 
 }

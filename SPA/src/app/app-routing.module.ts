@@ -16,7 +16,7 @@ const routes: Routes = [
     canActivate:[AdminGuard],
     runGuardsAndResolvers: 'always',
     children: [
-      {path: 'admin/admin-edit', component: AdminEditComponent},
+      {path: 'admin/admin-edit/:id', component: AdminEditComponent},
       {path: 'admin/admin-movies', component: AdminMoviesComponent},
       {path: 'admin/admin-new', component: AdminNewComponent},
     ]},

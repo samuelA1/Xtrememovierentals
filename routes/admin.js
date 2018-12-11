@@ -40,7 +40,7 @@ router.route('/movies')
         .skip(perPage * page)
         .populate('genre')
         .populate('owner')
-        .select(['owner','title', 'image', 'price', 'rentPrice'])
+        .select(['owner','title', 'image', 'price', 'rentPrice', '_id'])
         .exec((err, movies) => {
           callback(err, movies)
         })
@@ -73,8 +73,8 @@ router.route('/movies')
       movie.description = req.body.description;
       movie.image = req.file.location;
 
-      if (req.body.asHd) movie.numberInStockAsHd = req.body.numberInStockAsHd;
-      if (req.body.asBluRay) movie.numberInStockAsBluRay = req.body.numberInStockAsHd;
+      if (req.body.numberInStockAsHd) movie.numberInStockAsHd = req.body.numberInStockAsHd;
+      if (req.body.numberInStockAsBluRay) movie.numberInStockAsBluRay = req.body.numberInStockAsBluRay;
 
       movie.contentRating = req.body.contentRating;
       movie.movieLength = req.body.movieLength;
@@ -98,6 +98,60 @@ router.route('/movies')
         success: true,
         message: 'Movie successfully added',
       });
+  })
+
+  router.post('/update/:id', [checkJwt, isAdmin], (req, res, next) => {
+    async.waterfall([
+      function(callback) {
+        Movie.findOne({_id: req.params.id}, (err, movie) => {
+          callback(err, movie)
+        })
+      },
+      function(movie) {
+        var crewId = movie.crew
+        Crew.findOne({_id: crewId}, (err, crew) => {
+          if (err) return next(err);
+
+          let movie = movie;
+          let actualCrew = crew;
+
+          movie.title = req.body.title;
+
+      if (req.body['0']) movie.genre.push(req.body['0']);
+      if (req.body['1']) movie.genre.push(req.body['1']);
+      if (req.body['2']) movie.genre.push(req.body['2']);
+
+      movie.price = req.body.price;
+      if (req.body.price) movie.rentPrice = req.body.price - 2.11
+      movie.description = req.body.description;
+      movie.image = req.file.location;
+
+      if (req.body.numberInStockAsHd) movie.numberInStockAsHd = req.body.numberInStockAsHd;
+      if (req.body.numberInStockAsBluRay) movie.numberInStockAsBluRay = req.body.numberInStockAsBluRay;
+
+      movie.contentRating = req.body.contentRating;
+      movie.movieLength = req.body.movieLength;
+
+      if(req.body.director1) actualCrew.directors.push(req.body.director1);
+      if(req.body.director2) actualCrew.directors.push(req.body.director2);
+
+      if (req.body.actor1) actualCrew.actors.push(req.body.actor1);
+      if (req.body.actor2) actualCrew.actors.push(req.body.actor2);
+      if (req.body.actor3) actualCrew.actors.push(req.body.actor3);
+      if (req.body.actor4) actualCrew.actors.push(req.body.actor4);
+      if (req.body.actor5) actualCrew.actors.push(req.body.actor5);
+
+      if (req.body.Date) movie.releaseDate = req.body.Date;
+
+      movie.save();
+      crew.save();
+      res.json({
+        success: true,
+        message: 'Movie successfully updated',
+      });
+        })
+      }
+    ])
   })
   
   router.delete('/movie/:id', checkJwt, (req, res) => {

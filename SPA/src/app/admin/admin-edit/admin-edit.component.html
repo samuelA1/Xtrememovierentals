@@ -1,3 +1,111 @@
-<p>
-  admin-edit works!
-</p>
+<div class="container">
+    <div class="row">
+      <div class="col-md-8">
+        <div class="movie-container">
+          <h1 class="text-center">Edit movie</h1>
+            <form>
+                <div class="form-group">
+                  <label for="title">Title</label>
+                  <input type="text" class="form-control" id="title" placeholder="Enter movie title" 
+                  name="title" [(ngModel)]="movie.title">
+                </div>
+                <div class="form-group">
+                    <label for="description">Description</label>
+                    <textarea class="form-control" id="description" rows="3" name="description" 
+                    [(ngModel)]="movie.description" placeholder="say something about the movie"></textarea>
+                  </div>
+                  <h6>Enter name of directors <small class="text-muted">Do not enter more than two directors</small></h6>
+                  <div class="form-row">
+                    <div class="form-group col-md-6">
+                      <input type="text" class="form-control" placeholder="Director 1" name="director1" [(ngModel)]="movie.director1">
+                    </div>
+                    <div class="form-group col-md-6">
+                      <input type="text" class="form-control" placeholder="Director2" name="director2" [(ngModel)]="movie.director2">
+                    </div>
+                  </div>
+                  <hr>
+                  <h6>Enter name of actors <small class="text-muted">Do not enter more than five actors</small></h6>
+                  <div class="form-row">
+                    <div class="form-group col-md">
+                      <input type="text" class="form-control" placeholder="Actor 1" name="actor1" [(ngModel)]="movie.actor1">
+                    </div>
+                    <div class="form-group col-md">
+                      <input type="text" class="form-control" placeholder="Actor 2" name="actor2" [(ngModel)]="movie.actor2">
+                    </div>
+                    <div class="form-group col-md">
+                        <input type="text" class="form-control" placeholder="Actor 3" name="actor3" [(ngModel)]="movie.actor3">
+                    </div>
+                    <div class="form-group col-md">
+                        <input type="text" class="form-control" placeholder="Actor 4" name="actor4" [(ngModel)]="movie.actor4">
+                    </div>
+                    <div class="form-group col-md">
+                        <input type="text" class="form-control" placeholder="Actor 5" name="actor5" [(ngModel)]="movie.actor5">
+                    </div>
+                  </div>
+                  <hr>
+                  <h6>Already selected release date</h6>
+                  <p class="alert alert-primary">{{movie.releaseDate | date: 'medium'}}</p>
+                  <div class="form-row">
+                    <div class="form-group col-xs-12 col-12 col-md-4">
+                      <label for="releaseDate">Release date</label>
+                      <input type="text" class="form-control" id="releaseDate" placeholder="Enter movie Release Date" 
+                      name="Date" [(ngModel)]="movie.Date" bsDatepicker [bsValue]="bsValue" [bsConfig]="bsConfig">
+                    </div>
+                  </div>
+                <hr>
+                <h6>Already selected genres</h6>
+                <ul class="list-inline">
+                  <li *ngFor="let genre of movie.genres" class="list-inline-item alert alert-dark">{{genre.name}}</li>
+                </ul>
+                <h6>Select genres <small class="text-muted">Do not select more than three genres. Only the first three will be accepted</small></h6>
+                <div *ngFor="let genre of genres" class="form-check form-check-inline">
+                    <input class="form-check-input" type="checkbox" id="{{genre._id}}" value="{{genre._id}}"
+                     name="genre" [(ngModel)]="genre.checked">
+                    <label class="form-check-label" for="{{genre._id}}">{{genre.name}}</label>
+                </div>
+                <br>
+                <br>
+                <hr>
+                <label>Choose movie image</label>
+                <div class="form-row">
+                    <div class="custom-file form-group col-md mr-2">
+                        <label>Upload Image</label>
+                        <input type="file" class="form-control-file" accept="image/*" name="file" (change)="fileChange($event)">
+                    </div>
+                    <br>
+                </div>
+                <br>
+                <hr>
+                <div class="form-row">
+                  <div class="form-group col-md">
+                    <label for="price">Price</label>
+                    <input type="text" placeholder="$" class="form-control" id="price" name="price" [(ngModel)]="movie.price">
+                  </div>
+                  <div class="form-group col-md">
+                    <label for="movieLength">Movie length</label>
+                    <input placeholder=" e.g 2hrs40mins" type="text" class="form-control" id="movieLength" name="movieLength" [(ngModel)]="movie.movieLength">
+                  </div>
+                  <div class="form-group col-md">
+                    <label for="contentRating">Content Rating</label>
+                    <input placeholder="e.g PG-13" type="text" class="form-control" id="contentRating" name="contentRating" [(ngModel)]="movie.contentRating">
+                  </div>
+                  <div class="form-group col-md">
+                    <label for="numberInStockAsHd">In stock as HD</label>
+                    <input placeholder="number in stock as HD" type="text" class="form-control" id="numberInStockAsHd" name="numberInStockAsHd" [(ngModel)]="movie.numberInStockAsHd">
+                  </div>
+                  <div class="form-group col-md">
+                    <label for="numberInStockAsBluRay">In stock as BluRay</label>
+                    <input placeholder="number in stock BluRay" type="text" class="form-control" id="numberInStockAsBluRay" name="numberInStockAsBluRay" [(ngModel)]="movie.numberInStockAsBluRay">
+                  </div>
+                </div>
+                <button type="button" class="btn btn-primary" (click)="addMovie()">Add movie</button>
+              </form>
+        </div>
+      </div>
+      <div class="col-md mt-5">
+        <div class="card mt-5" style="width: 18rem;">
+          <img class="card-img-top" [src]="movie.image" alt="{{movie.title}}">
+        </div>
+      </div>
+    </div>
+  </div>

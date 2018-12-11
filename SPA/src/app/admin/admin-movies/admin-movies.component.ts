@@ -12,6 +12,7 @@ export class AdminMoviesComponent implements OnInit {
   totalItems: any;
   page: any = 1;
   movie: any = {};
+  hide: any = false;
 
   constructor(private movieService: MovieService, private alertify: AlertifyService) { }
 
@@ -34,10 +35,11 @@ export class AdminMoviesComponent implements OnInit {
   async searchMovies() {
     if (this.movie.title == '') {
       this.getMovies();
+      this.hide = false;
     }
     try {
       const data = await this.movieService.searchMovies(this.page, this.movie.title);
-      data['success'] ? (this.movies = data['content'].hits)
+      data['success'] ? (this.movies = data['content'].hits, this.hide = true)
       : this.alertify.error('Could not find search');
     } catch (error) {
       this.alertify.error(error);
@@ -48,6 +50,10 @@ export class AdminMoviesComponent implements OnInit {
   pageChanged(event: any) {
     this.page = event.page;
     this.getMovies();
+  }
+
+  editMovie(id: any) {
+    localStorage.setItem('movieId', id);
   }
 
 }

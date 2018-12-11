@@ -97,6 +97,8 @@ router.get('/movie/:id', (req, res, next) => {
     .populate('genre')
     .populate('reviews')
     .populate('crew')
+    .populate('crew.actors')
+    .populate('crew.directors')
     .exec((err, movie) => {
         if (err) return next(err);
 

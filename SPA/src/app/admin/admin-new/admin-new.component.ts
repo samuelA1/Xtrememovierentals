@@ -3,6 +3,7 @@ import { AlertifyService } from './../../_services/alertify.service';
 import { GenreService } from '../../_services/genre.service';
 import { Component, OnInit } from '@angular/core';
 import { BsDatepickerConfig } from 'ngx-bootstrap/datepicker';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -20,7 +21,7 @@ export class AdminNewComponent implements OnInit {
   bsConfig: Partial<BsDatepickerConfig>;
  
   constructor(private genreService: GenreService,
-     private alertify: AlertifyService, private movieService: MovieService) { }
+     private alertify: AlertifyService, private movieService: MovieService, private router: Router) { }
 
   async ngOnInit() {
     await this.getGenres();
@@ -94,6 +95,7 @@ export class AdminNewComponent implements OnInit {
      const movie = await this.movieService.addMovie(form);
      if (movie['success']) {
        this.alertify.success(movie['message']);
+       this.router.navigate(['/admin/admin-movies'])
      } else {
        this.alertify.error('The movie could not be added')
      }

@@ -24,11 +24,11 @@
                 <th scope="row">{{movie.title | titlecase}}</th>
                 <td>{{movie.price}}</td>
                 <td>{{movie.rentPrice}}</td>
-                <td><a href="">Edit</a></td>
+                <td><a [routerLink]="['/admin/admin-edit', movie.title]" (click)="editMovie(movie._id)">Edit</a></td>
               </tr>
             </tbody>
           </table>
-          <div class="offset-md-5">
+          <div class="offset-md-5" [ngClass]="{hide: hide}">
               <pagination [totalItems]="totalItems" (pageChanged)="pageChanged($event)" [maxSize]="5"></pagination>
           </div>
      </div>

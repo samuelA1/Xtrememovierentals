@@ -20,6 +20,11 @@ const token = localStorage.getItem('token');
 return token ? new HttpHeaders().set('Authorization', token) : null;
 }
 
+get loggedIn() {
+    const token = localStorage.getItem('token');
+    return this.helper.isTokenExpired(token);
+}
+
 async register(user: any) {
     return this.http.post(this.apiUrl + 'auth/register', user, {headers: this.headers}).toPromise()
     .then((res) => {
