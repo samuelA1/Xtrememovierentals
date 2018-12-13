@@ -32,5 +32,13 @@ export class MovieService {
   singleMovie(movieId: any) {
     return this.http.get(this.apiUrl + 'movie/' + movieId, {headers: this.headers}).toPromise();
   }
+
+  updateMovie(movieImage, movieId: any) {
+    return this.http.post(this.apiUrl + 'admin/update/' + movieId, movieImage, {headers: this.headers}).toPromise();
+  }
+
+  deleteMovie(movieId: any) {
+    return this.http.delete(this.apiUrl + 'admin/movie/' + movieId, {headers: this.headers}).toPromise();
+  }
  
 }

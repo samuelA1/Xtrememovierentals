@@ -66,16 +66,6 @@
                 <br>
                 <br>
                 <hr>
-                <label>Choose movie image</label>
-                <div class="form-row">
-                    <div class="custom-file form-group col-md mr-2">
-                        <label>Upload Image</label>
-                        <input type="file" class="form-control-file" accept="image/*" name="file" (change)="fileChange($event)">
-                    </div>
-                    <br>
-                </div>
-                <br>
-                <hr>
                 <div class="form-row">
                   <div class="form-group col-md">
                     <label for="price">Price</label>
@@ -98,13 +88,23 @@
                     <input placeholder="number in stock BluRay" type="text" class="form-control" id="numberInStockAsBluRay" name="numberInStockAsBluRay" [(ngModel)]="movie.numberInStockAsBluRay">
                   </div>
                 </div>
-                <button type="button" class="btn btn-primary" (click)="addMovie()">Add movie</button>
+                <button type="button" class="btn btn-primary" (click)="editMovie(movie._id)">Edit movie</button> <button type="button" class="btn btn-danger ml-2" (click)="deleteMovie(movie._id)">Delete movie</button>
               </form>
         </div>
       </div>
       <div class="col-md mt-5">
         <div class="card mt-5" style="width: 18rem;">
           <img class="card-img-top" [src]="movie.image" alt="{{movie.title}}">
+        </div>
+        <br>
+        <label>Choose a new movie image</label>
+        <div class="form-row">
+            <div class="custom-file form-group col-md mr-2">
+                <label>Upload Image</label>
+                <input type="file" class="form-control-file" accept="image/*" name="file" (change)="fileChange($event)">
+                <button style="width: 18rem;" type="button" class="btn btn-primary mt-2" (click)="uploadImage(movie._id)">upload image</button>
+            </div>
+            <br>
         </div>
       </div>
     </div>

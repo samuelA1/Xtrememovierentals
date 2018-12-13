@@ -100,7 +100,7 @@ router.route('/movies')
       });
   })
 
-  router.post('/update/:id', [checkJwt, isAdmin], (req, res, next) => {
+  router.post('/update/:id', [checkJwt, isAdmin, upload.single('product_picture')], (req, res, next) => {
     async.waterfall([
       function(callback) {
         Movie.findOne({_id: req.params.id}, (err, movie) => {
@@ -108,42 +108,65 @@ router.route('/movies')
         })
       },
       function(movie) {
-        var crewId = movie.crew
+        var movieToUpdate = movie;
+        var crewId = movieToUpdate.crew
         Crew.findOne({_id: crewId}, (err, crew) => {
           if (err) return next(err);
 
-          let movie = movie;
-          let actualCrew = crew;
+        var actualCrew = crew;
 
-          movie.title = req.body.title;
+      if(req.body.title != undefined) movieToUpdate.title = req.body.title;
+      console.log(req.body)
+      if (req.body['0']) {
+        movieToUpdate.genre = []
+        movieToUpdate.genre.push(req.body['0']);
+      }
+      if (req.body['1']) {
+        movieToUpdate.genre.push(req.body['1']);
+      }
+      if (req.body['2']) {
+        movieToUpdate.genre.push(req.body['2']);
+      }
 
-      if (req.body['0']) movie.genre.push(req.body['0']);
-      if (req.body['1']) movie.genre.push(req.body['1']);
-      if (req.body['2']) movie.genre.push(req.body['2']);
+      if(req.body.price != undefined) movieToUpdate.price = req.body.price;
+      if (req.body.price) movieToUpdate.rentPrice = req.body.price - 2.11
+      if (req.body.description != undefined) movieToUpdate.description = req.body.description;
+      if (req.body.product_picture != null) movieToUpdate.image = req.file.location;
 
-      movie.price = req.body.price;
-      if (req.body.price) movie.rentPrice = req.body.price - 2.11
-      movie.description = req.body.description;
-      movie.image = req.file.location;
+      if (req.body.numberInStockAsHd) movieToUpdate.numberInStockAsHd = req.body.numberInStockAsHd;
+      if (req.body.numberInStockAsBluRay) movieToUpdate.numberInStockAsBluRay = req.body.numberInStockAsBluRay;
 
-      if (req.body.numberInStockAsHd) movie.numberInStockAsHd = req.body.numberInStockAsHd;
-      if (req.body.numberInStockAsBluRay) movie.numberInStockAsBluRay = req.body.numberInStockAsBluRay;
+      if(req.body.contentRating != undefined)movieToUpdate.contentRating = req.body.contentRating;
+      if(req.body.movieLength != undefined)movieToUpdate.movieLength = req.body.movieLength;
 
-      movie.contentRating = req.body.contentRating;
-      movie.movieLength = req.body.movieLength;
+      if(req.body.director1) {
+        actualCrew.directors.splice(0, 1)
+        actualCrew.directors.push(req.body.director1);
+      } 
+      if(req.body.director2) {
+        actualCrew.directors.splice(1, 1)
+        actualCrew.directors.push(req.body.director2);
+      }
 
-      if(req.body.director1) actualCrew.directors.push(req.body.director1);
-      if(req.body.director2) actualCrew.directors.push(req.body.director2);
+      if (req.body.actor1) {
+        actualCrew.actors.splice(0, 1)
+        actualCrew.actors.push(req.body.actor1)};
+      if (req.body.actor2) {
+        actualCrew.actors.splice(1, 1)
+        actualCrew.actors.push(req.body.actor2)};
+      if (req.body.actor3) {
+        actualCrew.actors.splice(2, 1)
+        actualCrew.actors.push(req.body.actor3)};
+      if (req.body.actor4) {
+        actualCrew.actors.splice(3, 1)
+        actualCrew.actors.push(req.body.actor4)};
+      if (req.body.actor5) {
+        actualCrew.actors.splice(4, 1)
+        actualCrew.actors.push(req.body.actor5)};  
 
-      if (req.body.actor1) actualCrew.actors.push(req.body.actor1);
-      if (req.body.actor2) actualCrew.actors.push(req.body.actor2);
-      if (req.body.actor3) actualCrew.actors.push(req.body.actor3);
-      if (req.body.actor4) actualCrew.actors.push(req.body.actor4);
-      if (req.body.actor5) actualCrew.actors.push(req.body.actor5);
+      if (req.body.Date) movieToUpdate.releaseDate = req.body.Date;
 
-      if (req.body.Date) movie.releaseDate = req.body.Date;
-
-      movie.save();
+      movieToUpdate.save();
       crew.save();
       res.json({
         success: true,
@@ -171,19 +194,19 @@ router.route('/movies')
             });
           } else {
 
-            Crew.findByIdAndRemove(crewId, (err) => {
-              if (err) {
-                res.json({
-                  success: false,
-                  message: 'Failed to delete movie'
-                });
-              } else {
-                res.json({
-                  success: true,
-                  message: 'Movie successfully deleted'
-                })
-              }
-            })
+          Crew.findByIdAndRemove(crewId, (err) => {
+            if (err) {
+              res.json({
+                success: false,
+                message: 'Failed to delete movie'
+              });
+            } else {
+              res.json({
+                success: true,
+                message: 'Movie successfully deleted'
+              })
+            }
+          })
           }
         })
       }
