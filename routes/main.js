@@ -66,6 +66,7 @@ router.route('/genre')
                 Movie.find({genre: req.params.id})
                 .limit(perPage)
                 .skip(page * perPage)
+                .sort({releaseDate: -1})
                 .populate('user')
                 .populate('genre')
                 .exec((err, movies) => {
@@ -87,7 +88,6 @@ router.route('/genre')
                 totalMovies: count,
                 movies: movies,
                 genre: genre,
-                pages: Math.ceil(count / perPage)
             })
         })
     });

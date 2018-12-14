@@ -17,12 +17,24 @@ export class AdminMoviesComponent implements OnInit {
   constructor(private movieService: MovieService, private alertify: AlertifyService) { }
 
   ngOnInit() {
-    this.getMovies();
+    this.getAllMovies();
   }
 
   async getMovies() {
     try {
       const movies = await this.movieService.getMovies(this.page);
+      if (movies['success']) {
+        this.movies = movies['movies'];
+        this.totalItems = movies['totalItems']
+      }
+    } catch (error) {
+      this.alertify.error(error);
+    }
+  }
+
+  async getAllMovies() {
+    try {
+      const movies = await this.movieService.getAllMovies(this.page);
       if (movies['success']) {
         this.movies = movies['movies'];
         this.totalItems = movies['totalItems']

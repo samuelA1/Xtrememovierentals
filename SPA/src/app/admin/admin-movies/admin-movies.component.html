@@ -3,11 +3,12 @@
     <div class="col-md justify-content-center">
      <div>
        <div><a [routerLink]="['/admin/admin-new']" class="btn btn-secondary mb-3" >
-        New movie</a></div>
+        New movie</a> <a (click)="getMovies()" class="btn btn-warning ml-2 mb-3" >
+          Movie added by me</a></div>
         <div class="form-group">
             <input type="text" class="form-control" id="title" placeholder="Search movie..." 
             name="title" [(ngModel)]="movie.title" (keyup)="searchMovies()">
-          </div>
+        </div>
         <table class="table">
             <thead>
               <tr>
@@ -19,6 +20,7 @@
               </tr>
             </thead>
             <tbody>
+              <h2 class="offset-md-5" *ngIf="movies == ''">No movie added</h2>
               <tr *ngFor="let movie of movies">
                 <td class="image"><img [src]="movie.image" alt="movie.title"></td>
                 <th scope="row">{{movie.title | titlecase}}</th>

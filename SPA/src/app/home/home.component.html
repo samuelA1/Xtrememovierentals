@@ -1,3 +1,36 @@
-<p>
-  home works!
-</p>
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md">
+      <div class="carousel">
+          <carousel>
+              <slide>
+                <img src="https://images2.vudu.com/uiEntry/29817/placard-1500.jpg" alt="first slide">
+              </slide>
+              <slide>
+                  <video preload="auto" src="../../assets/images/video.mp4" autoplay></video>
+              </slide>
+              <slide>
+                <img src="https://images2.vudu.com/uiEntry/29824/placard-1500.jpg" alt="second slide" >
+              </slide>
+              <slide>
+                  <video preload="auto" src="../../assets/images/venom.mp4" autoplay></video>
+              </slide>
+          </carousel>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container allMovies text-center">
+    <div *ngFor="let genreMovie of genreMovies" >
+        <h2 class="mb-5">{{genreMovie.genre.name}}</h2>
+        <div class="row">
+          <div *ngFor="let movie of genreMovie.movies">
+              <div>
+                <a href=""><img [src]="movie.image" alt="{{movie.title}}" style="width: 180px;" class="ml-4"></a>
+              </div>    
+          </div>
+        </div>
+        <hr>
+      </div>
+</div>

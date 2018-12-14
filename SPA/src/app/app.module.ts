@@ -19,6 +19,8 @@ import {MatButtonModule} from '@angular/material/button';
 import {MatDividerModule} from '@angular/material/divider';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { PaginationModule } from 'ngx-bootstrap/pagination';
+import { CarouselModule } from 'ngx-bootstrap/carousel';
+
 
 
 
@@ -56,7 +58,8 @@ import { LoginComponent } from './login/login.component';
     MatButtonModule,
     MatDividerModule,
     BsDatepickerModule.forRoot(),
-    PaginationModule.forRoot()
+    PaginationModule.forRoot(),
+    CarouselModule.forRoot()
   ],
   providers: [AuthService, AlertifyService, AdminGuard, GenreService, MovieService],
   bootstrap: [AppComponent]

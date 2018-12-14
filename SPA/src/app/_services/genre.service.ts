@@ -29,4 +29,8 @@ export class GenreService {
     return this.http.delete(this.apiUrl + 'genre/' + genreId, {headers: this.headers}).toPromise()
   }
 
+  genreMovie(genreId: any) {
+    return this.http.get(this.apiUrl + 'genre/' + genreId, {headers: this.headers}).toPromise();
+  }
+
 }

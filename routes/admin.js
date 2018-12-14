@@ -24,8 +24,7 @@ var upload = multer({
     })
   });
 
-router.route('/movies')
-  .get(checkJwt, (req, res, next) => {
+  router.get('/allMovies', [checkJwt, isAdmin], (req, res, next) => {
     const page = req.query.page
     const perPage = 10;
     async.parallel([
@@ -35,7 +34,7 @@ router.route('/movies')
         })
       },
       function(callback) {
-        Movie.find({owner: req.decoded.user._id})
+        Movie.find({})
         .limit(perPage)
         .skip(perPage * page)
         .populate('genre')
@@ -54,6 +53,35 @@ router.route('/movies')
         movies: movies,
         totalItems: count,
         pages: Math.ceil(count / perPage)
+      });
+    });
+  })
+
+router.route('/movies')
+  .get(checkJwt, (req, res, next) => {
+    async.parallel([
+      function(callback) {
+        Movie.count({owner: req.decoded.user._id}, (err, count) => {
+          callback(err, count)
+        })
+      },
+      function(callback) {
+        Movie.find({owner: req.decoded.user._id})
+        .populate('genre')
+        .populate('owner')
+        .select(['owner','title', 'image', 'price', 'rentPrice', '_id'])
+        .exec((err, movies) => {
+          callback(err, movies)
+        })
+      }
+    ], function(err, results) {
+      const count = results[0];
+      const movies = results[1];
+      res.json({
+        success: true,
+        message: 'Enjoy',
+        movies: movies,
+        totalItems: count,
       });
     });
   })
