@@ -3,7 +3,7 @@
     <div class="col-md-8">
       <div class="movie-container">
         <h1 class="text-center">Add a movie</h1>
-          <form>
+          <form #f="ngForm">
               <div class="form-group">
                 <label for="title">Title</label>
                 <input type="text" class="form-control" id="title" placeholder="Enter movie title" 
@@ -92,7 +92,7 @@
                   <input placeholder="number in stock BluRay" type="text" class="form-control" id="numberInStockAsBluRay" name="numberInStockAsBluRay" [(ngModel)]="movie.numberInStockAsBluRay">
                 </div>
               </div>
-              <button type="button" class="btn btn-primary" (click)="addMovie()">Add movie</button>
+              <button [disabled]="!f.dirty" type="button" class="btn btn-primary" (click)="addMovie()">Add movie</button>
             </form>
       </div>
     </div>

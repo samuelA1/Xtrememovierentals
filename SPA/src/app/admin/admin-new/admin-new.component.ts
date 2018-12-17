@@ -1,9 +1,10 @@
 import { MovieService } from './../../_services/movie.service';
 import { AlertifyService } from './../../_services/alertify.service';
 import { GenreService } from '../../_services/genre.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, HostListener } from '@angular/core';
 import { BsDatepickerConfig } from 'ngx-bootstrap/datepicker';
 import { Router } from '@angular/router';
+import { NgForm } from '@angular/forms';
 
 
 @Component({
@@ -12,6 +13,13 @@ import { Router } from '@angular/router';
   styleUrls: ['./admin-new.component.scss']
 })
 export class AdminNewComponent implements OnInit {
+  @ViewChild('f') f: NgForm;
+  @HostListener('window:beforeunload', ['$event'])
+  unloadNotification($event: any) {
+    if (this.f.dirty) {
+      $event.returnValue = true;
+    }
+  }
   movie: any = {
     product_picture: null,
   };

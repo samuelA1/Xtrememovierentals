@@ -1,3 +1,4 @@
+import { PreventChangesGuard } from './_guards/prevent-changes.guard';
 import { MovieService } from './_services/movie.service';
 import { GenreService } from './_services/genre.service';
 import { AdminMoviesComponent } from './admin/admin-movies/admin-movies.component';
@@ -32,36 +33,47 @@ import { AppComponent } from './app.component';
 import { RegistrationComponent } from './registration/registration.component';
 import { HomeComponent } from './home/home.component';
 import { LoginComponent } from './login/login.component';
+import { MovieComponent } from './movie/movie.component';
 
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    RegistrationComponent,
-    HomeComponent,
-    LoginComponent,
-    AdminEditComponent,
-    AdminNewComponent,
-    AdminMoviesComponent
-],
-  imports: [
-    BrowserModule,
-    BrowserAnimationsModule,
-    AppRoutingModule,
-    FormsModule,
-    ReactiveFormsModule,
-    HttpClientModule,
-    MatFormFieldModule,
-    MatCardModule,
-    MatInputModule,
-    MatCheckboxModule,
-    MatButtonModule,
-    MatDividerModule,
-    BsDatepickerModule.forRoot(),
-    PaginationModule.forRoot(),
-    CarouselModule.forRoot()
-  ],
-  providers: [AuthService, AlertifyService, AdminGuard, GenreService, MovieService],
-  bootstrap: [AppComponent]
+   declarations: [
+      AppComponent,
+      RegistrationComponent,
+      HomeComponent,
+      LoginComponent,
+      AdminEditComponent,
+      AdminNewComponent,
+      AdminMoviesComponent,
+      MovieComponent
+   ],
+   imports: [
+      BrowserModule,
+      BrowserAnimationsModule,
+      AppRoutingModule,
+      FormsModule,
+      ReactiveFormsModule,
+      HttpClientModule,
+      MatFormFieldModule,
+      MatCardModule,
+      MatInputModule,
+      MatCheckboxModule,
+      MatButtonModule,
+      MatDividerModule,
+      BsDatepickerModule.forRoot(),
+      PaginationModule.forRoot(),
+      CarouselModule.forRoot()
+   ],
+   providers: [
+      AuthService,
+      AlertifyService,
+      AdminGuard,
+      GenreService,
+      MovieService,
+      PreventChangesGuard
+   ],
+   bootstrap: [
+      AppComponent
+   ]
 })
 export class AppModule { }

@@ -1,19 +1,19 @@
-<div class="container-fluid">
+<div class="container-fluid text-center">
   <div class="row">
     <div class="col-md">
       <div class="carousel">
           <carousel>
               <slide>
+                  <video src="https://images2.vudu.com/uiEntry/29816/video.mp4" autoplay></video>
+              </slide>
+              <slide>
                 <img src="https://images2.vudu.com/uiEntry/29817/placard-1500.jpg" alt="first slide">
               </slide>
               <slide>
-                  <video preload="auto" src="../../assets/images/video.mp4" autoplay></video>
+                  <video src="../../assets/images/video.mp4" autoplay></video>
               </slide>
               <slide>
                 <img src="https://images2.vudu.com/uiEntry/29824/placard-1500.jpg" alt="second slide" >
-              </slide>
-              <slide>
-                  <video preload="auto" src="../../assets/images/venom.mp4" autoplay></video>
               </slide>
           </carousel>
       </div>
@@ -22,15 +22,14 @@
 </div>
 
 <div class="container allMovies text-center">
-    <div *ngFor="let genreMovie of genreMovies" >
-        <h2 class="mb-5">{{genreMovie.genre.name}}</h2>
+    <div *ngFor="let genreMovie of genreMovies" class="movie-container">
+        <h2 class="mb-5">{{genreMovie.genre.name | titlecase}}</h2>
         <div class="row">
           <div *ngFor="let movie of genreMovie.movies">
               <div>
-                <a href=""><img [src]="movie.image" alt="{{movie.title}}" style="width: 180px;" class="ml-4"></a>
+                <a [routerLink]="['/movies', movie.title]" ><img [src]="movie.image" alt="{{movie.title}}" class="ml-4 movie-image mb-4"></a>
               </div>    
           </div>
         </div>
-        <hr>
-      </div>
+    </div>
 </div>

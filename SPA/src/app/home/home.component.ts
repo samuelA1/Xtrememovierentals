@@ -11,8 +11,7 @@ import { Component, OnInit } from '@angular/core';
 export class HomeComponent implements OnInit {
 genreMovies: any[] = [];
 
-  constructor(private movieService: MovieService,
-     private genreService: GenreService, private alertify: AlertifyService) { }
+  constructor(private genreService: GenreService, private alertify: AlertifyService) { }
 
   async ngOnInit() {
     this.getAllGenreMovies();
@@ -26,9 +25,7 @@ genreMovies: any[] = [];
       genres.forEach(async genreLoop => {
         const movies = await this.genreService.genreMovie(genreLoop._id)
         this.genreMovies.push(movies)
-        // console.log(movies)
       });
-      console.log(this.genreMovies)
     } catch (error) {
       this.alertify.error(error.message);
     }
