@@ -1,7 +1,60 @@
 <div class="container">
   <div class="row">
-    <div class="col-md">
-      
+    <div class="col-md text-center">
+      <img [src]="movie?.image" alt="movie?.title">
     </div>
+    <div class="col-md">
+      <h2>{{movie?.title | titlecase}}</h2>
+      <div>
+        <ul class="list-inline">
+          <li *ngFor="let genre of movie?.genre" class="list-inline-item">{{genre.name}} |</li>
+          <li class="list-inline-item">{{movie?.releaseDate | date : 'longDate'}}</li>
+        </ul>
+      </div>
+      <div class="mb-3">
+        <rating class="btn btn-warning" [(ngModel)]="rating" [max]="5" [readonly]="true"></rating> <small class="ml-2">({{movie?.reviews.length}})</small>
+      </div>
+      <div>
+        <ul class="list-inline">
+         <li class="list-inline-item btn btn-secondary">{{movie?.contentRating}}</li>
+         <li class="list-inline-item btn btn-secondary">{{movie?.movieLength}}</li>
+        </ul>
+      </div>
+      <div>
+        <a href="https://www.youtube.com/watch?v=wb49-oV0F78" class="btn btn-outline-primary" target="_blank">Watch trailer</a>
+      </div>
+      <div class="mt-5">
+        <p>{{movie?.description}}</p>
+      </div>
+      <div>
+        <ul class="list-inline">
+         <li class="list-inline-item btn btn-primary" (click)="addToCart('own', movie._id)">Own {{movie?.price}}</li>
+         <li class="list-inline-item btn btn-primary" (click)="addToCart('rent', movie._id)">Rent {{movie?.rentPrice}}</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class=" ml-5 mt-5 mb-5">
+      <h5>Cast & Crew</h5>
+  </div>
+  <div class="row ml-5 mt-5 mb-5">
+    <div class="col-md">
+        <div>
+          <h6 class="text-warning">Director(s)</h6>
+          <p *ngFor="let directors of movie?.crew.directors">{{directors}}</p>
+        </div>
+    </div>
+    <div class="col-md">
+        <div>
+            <h6 class="text-warning">Actor(s)</h6>
+            <p *ngFor="let actors of movie?.crew.actors">{{actors}}</p>
+          </div>
+    </div>
+  </div>
+  <div class=" ml-5 mt-5 mb-5">
+      <h5>Reviews</h5>
+      <div class="text-center" *ngIf="movie?.reviews.length == 0">
+        <h4>No reviews added</h4>
+      </div>
   </div>
 </div>

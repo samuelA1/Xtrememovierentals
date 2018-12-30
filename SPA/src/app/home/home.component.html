@@ -27,7 +27,7 @@
         <div class="row">
           <div *ngFor="let movie of genreMovie.movies">
               <div>
-                <a [routerLink]="['/movies', movie.title]" ><img [src]="movie.image" alt="{{movie.title}}" class="ml-4 movie-image mb-4"></a>
+                <a (click)="setId(movie._id)" [routerLink]="['/movies', movie.title]" ><img [src]="movie.image" alt="{{movie.title}}" class="ml-4 movie-image mb-4"></a>
               </div>    
           </div>
         </div>

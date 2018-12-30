@@ -21,8 +21,8 @@ const MovieSchema = new Schema({
     toObject: {virtuals: true}});
 
 MovieSchema.virtual('averageRating').get(function() {
-  let rating = 0;
-  if (!this.reviews) {
+  var rating = 0;
+  if (!this.reviews || this.reviews.length == 0) {
     rating = 0;
   } else {
     this.reviews.map(review => {

@@ -15,6 +15,9 @@ export class AppComponent {
 
   constructor(public authService: AuthService, private router: Router) {
     this.persist();
+    if (localStorage.getItem('cart')) {
+      authService.cartNumber = JSON.parse(localStorage.getItem('cart')).length;
+    }
   }
 
   persist () {

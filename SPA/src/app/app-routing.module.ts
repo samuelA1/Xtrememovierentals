@@ -1,3 +1,4 @@
+import { CartComponent } from './cart/cart.component';
 import { PreventChangesGuard } from './_guards/prevent-changes.guard';
 import { MovieComponent } from './movie/movie.component';
 import { AdminNewComponent } from './admin/admin-new/admin-new.component';
@@ -15,6 +16,7 @@ const routes: Routes = [
   {path: 'register', component: RegistrationComponent},
   {path: 'login', component: LoginComponent},
   {path: 'movies/:name', component:  MovieComponent},
+  {path: 'cart', component: CartComponent},
   {path: '',
     canActivate:[AdminGuard],
     runGuardsAndResolvers: 'always',

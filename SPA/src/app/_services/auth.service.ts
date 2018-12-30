@@ -11,6 +11,8 @@ export class AuthService {
 apiUrl: any = environment.apiUrl;
 user: any;
 helper = new JwtHelperService();
+cartNumber: any = 0;
+
 
 
 constructor(private http: HttpClient, private alertify: AlertifyService) { }

@@ -21,6 +21,8 @@ import {MatDividerModule} from '@angular/material/divider';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { PaginationModule } from 'ngx-bootstrap/pagination';
 import { CarouselModule } from 'ngx-bootstrap/carousel';
+import { RatingModule } from 'ngx-bootstrap/rating';
+
 
 
 
@@ -34,6 +36,7 @@ import { RegistrationComponent } from './registration/registration.component';
 import { HomeComponent } from './home/home.component';
 import { LoginComponent } from './login/login.component';
 import { MovieComponent } from './movie/movie.component';
+import { CartComponent } from './cart/cart.component';
 
 
 @NgModule({
@@ -45,7 +48,8 @@ import { MovieComponent } from './movie/movie.component';
       AdminEditComponent,
       AdminNewComponent,
       AdminMoviesComponent,
-      MovieComponent
+      MovieComponent,
+      CartComponent
    ],
    imports: [
       BrowserModule,
@@ -62,7 +66,8 @@ import { MovieComponent } from './movie/movie.component';
       MatDividerModule,
       BsDatepickerModule.forRoot(),
       PaginationModule.forRoot(),
-      CarouselModule.forRoot()
+      CarouselModule.forRoot(),
+      RatingModule.forRoot()
    ],
    providers: [
       AuthService,

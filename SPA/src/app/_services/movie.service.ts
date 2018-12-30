@@ -9,7 +9,6 @@ export class MovieService {
 
   apiUrl: any = environment.apiUrl;
 
-
   constructor(private http: HttpClient) { }
 
   get headers() {

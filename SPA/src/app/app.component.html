@@ -24,6 +24,7 @@
             <a class="btn text-white dropdown-toggle" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               Sign In
             </a>
+            <a [routerLink]="['/cart']" class="text-white"><i class="fas fa-shopping-cart"><span class="cartNumber" *ngIf="authService.cartNumber">{{authService.cartNumber}}</span></i></a>
             <div class="dropdown-menu" aria-labelledby="dropdownMenuLink" [class.show]="signIn">
               <a class="dropdown-item" [routerLink]="['/login']">Log In</a>
               <a class="dropdown-item" [routerLink]="['/register']">Create Account</a>
@@ -33,6 +34,7 @@
             <a class="btn text-white dropdown-toggle" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               Hi {{authService.user?.user?.name | titlecase}}
             </a>
+            <a [routerLink]="['/cart']" class="text-white"><i class="fas fa-shopping-cart"><span class="text-warning" *ngIf="authService.cartNumber">{{authService.cartNumber}}</span></i></a>
             <div class="dropdown-menu" aria-labelledby="dropdownMenuLink" [class.show]="signIn">
               <a class="dropdown-item" (click)="logOut()">Log Out</a>
               <hr>

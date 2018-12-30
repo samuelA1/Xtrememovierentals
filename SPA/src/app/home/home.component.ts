@@ -31,5 +31,9 @@ genreMovies: any[] = [];
     }
   }
 
+  setId(movieId) {
+    localStorage.setItem('movieToSee', movieId);
+  }
+
 
 }
