@@ -2,7 +2,7 @@ import { AlertifyService } from './../_services/alertify.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../_services/auth.service';
-import { Router } from '@angular/router';
+import { Router,  ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -12,11 +12,17 @@ import { Router } from '@angular/router';
 export class LoginComponent implements OnInit {
   loginForm: FormGroup;
   user: any = {};
+  returnUrl: any;
 
-  constructor(private fb: FormBuilder, private authService: AuthService, private router: Router, private alertify: AlertifyService) { }
+  constructor(private fb: FormBuilder, 
+    private authService: AuthService, 
+    private router: Router, 
+    private alertify: AlertifyService, 
+    private route: ActivatedRoute) { }
 
   ngOnInit() {
     this.createLogin();
+    this.route.params.subscribe(res => this.returnUrl = res['returnUrl']);
   }
 
 createLogin() {
@@ -35,7 +41,11 @@ createLogin() {
       var user = await this.authService.login(this.user);
       if (user['success']) {
         localStorage.setItem('token', user['token']);
-        this.router.navigate(['/home']);
+        if (this.returnUrl === '/cart') {
+          this.router.navigate(['/cart']);
+        } else {
+          this.router.navigate(['/home']);
+        }
         this.alertify.success(user['message']);   
       } else {
         

@@ -49,6 +49,16 @@
                     <input type="text" class="form-control" id="releaseDate" placeholder="Enter movie Release Date" 
                     name="releaseDate" [(ngModel)]="movie.Date" bsDatepicker [bsValue]="bsValue" [bsConfig]="bsConfig">
                   </div>
+                  <div class="form-group col-xs-12 col-12 col-md-4">
+                      <label for="movieRating">Movie rating</label>
+                      <input type="text" class="form-control" id="movieRating" placeholder="Movie rating on 10 (6/10)" 
+                      name="movieRating" [(ngModel)]="movie.movieRating">
+                  </div>
+                  <div class="form-group col-xs-12 col-12 col-md-4">
+                      <label for="trailerUrl">Movie trailer url</label>
+                      <input type="text" class="form-control" id="trailerUrl" placeholder="Enter url for trailer" 
+                      name="trailerUrl" [(ngModel)]="movie.trailerUrl">
+                  </div>
                 </div>
               <hr>
               <h6>Select genres <small class="text-muted">Do not select more than three genres. Only the first three will be accepted</small></h6>

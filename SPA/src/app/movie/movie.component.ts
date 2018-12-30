@@ -24,14 +24,13 @@ export class MovieComponent implements OnInit {
       if (movieToSee['success']) {
         this.movie = movieToSee['movie'];
         this.rating = this.movie.averageRating
-        console.log(this.movie)
       }
     } catch (error) {
       this.alertify.error('Unable to retrieve movie');
     }
   }
 
-  addToCart(action: any, movieId: any) {
+  addToCart(movieId: any, movieImage: any, movieTitle: any, moviePrice: any) {
     var cartFrom: any = localStorage.getItem('cart')
     var cart: any = []
     if (cartFrom) {
@@ -40,15 +39,17 @@ export class MovieComponent implements OnInit {
       if (isPresent) {
         this.alertify.error('Movie has already been added to cart')
       } else {
-        cart.push({action: action, movieId: movieId})
+        cart.push({movieId, movieImage, movieTitle, moviePrice})
         localStorage.setItem('cart', JSON.stringify(cart));
         this.authService.cartNumber += 1;
+        this.alertify.success('Movie added to cart');
       }
     } else {
       let cart: any =[]
-      cart.push({action: action, movieId: movieId});
+      cart.push({movieId, movieImage, movieTitle, moviePrice});
       localStorage.setItem('cart', JSON.stringify(cart));
       this.authService.cartNumber += 1;
+      this.alertify.success('Movie added to cart');
     }
   }
 

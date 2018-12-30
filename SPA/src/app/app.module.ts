@@ -22,6 +22,8 @@ import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { PaginationModule } from 'ngx-bootstrap/pagination';
 import { CarouselModule } from 'ngx-bootstrap/carousel';
 import { RatingModule } from 'ngx-bootstrap/rating';
+import { ModalModule } from 'ngx-bootstrap/modal';
+
 
 
 
@@ -67,7 +69,8 @@ import { CartComponent } from './cart/cart.component';
       BsDatepickerModule.forRoot(),
       PaginationModule.forRoot(),
       CarouselModule.forRoot(),
-      RatingModule.forRoot()
+      RatingModule.forRoot(),
+      ModalModule.forRoot()
    ],
    providers: [
       AuthService,

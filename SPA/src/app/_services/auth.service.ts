@@ -47,6 +47,10 @@ async login(user: any) {
     })
 }
 
+addAddress(address: any) {
+    return this.http.post(this.apiUrl + 'account/address', address, {headers: this.headers}).toPromise();
+}
+
 
 
 }

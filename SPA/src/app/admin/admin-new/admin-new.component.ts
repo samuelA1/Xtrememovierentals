@@ -122,7 +122,15 @@ export class AdminNewComponent implements OnInit {
                       if (movie.numberInStockAsBluRay) {
                         if (movie.contentRating) {
                           if (movie.Date) {
-                            return true
+                            if (movie.movieRating) {
+                              if (movie.trailerUrl) {
+                                return true
+                              } else {
+                                this.alertify.error('Please enter a trailer url')
+                              }
+                            } else {
+                              this.alertify.error('Please enter a movie rating')
+                            }
                           } else {
                             this.alertify.error('Please enter a relaease date for movie')
                           }

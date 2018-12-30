@@ -105,7 +105,9 @@ router.route('/movies')
       if (req.body.numberInStockAsBluRay) movie.numberInStockAsBluRay = req.body.numberInStockAsBluRay;
 
       movie.contentRating = req.body.contentRating;
+      movie.reviews = req.body.movieRating;
       movie.movieLength = req.body.movieLength;
+      movie.trailerUrl = req.body.trailerUrl;
 
       if(req.body.director1) crew.directors.push(req.body.director1);
       if(req.body.director2) crew.directors.push(req.body.director2);
@@ -144,7 +146,6 @@ router.route('/movies')
         var actualCrew = crew;
 
       if(req.body.title != undefined) movieToUpdate.title = req.body.title;
-      console.log(req.body)
       if (req.body['0']) {
         movieToUpdate.genre = []
         movieToUpdate.genre.push(req.body['0']);
@@ -165,7 +166,9 @@ router.route('/movies')
       if (req.body.numberInStockAsBluRay) movieToUpdate.numberInStockAsBluRay = req.body.numberInStockAsBluRay;
 
       if(req.body.contentRating != undefined)movieToUpdate.contentRating = req.body.contentRating;
+      if(req.body.movieRating != undefined)movieToUpdate.reviews = req.body.movieRating;
       if(req.body.movieLength != undefined)movieToUpdate.movieLength = req.body.movieLength;
+      if(req.body.trailerUrl != undefined)movieToUpdate.trailerUrl = req.body.trailerUrl;
 
       if(req.body.director1) {
         actualCrew.directors.splice(0, 1)

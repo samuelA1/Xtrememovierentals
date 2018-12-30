@@ -10,25 +10,23 @@ const MovieSchema = new Schema({
     description: String,
     price: Number,
     rentPrice: Number,
-    reviews: [{type: Schema.Types.ObjectId, ref: 'Review'}],
+    reviews: {type: Number, default: 0},
     crew: {type: Schema.Types.ObjectId, ref: 'Crew'},
     contentRating: String,
     movieLength: String,
     numberInStockAsHd: {type: Number, default: 0},
     numberInStockAsBluRay: {type: Number, default: 0},
-    releaseDate: String
+    releaseDate: String,
+    trailerUrl: String
 }, {toJSON: {virtuals: true},
     toObject: {virtuals: true}});
 
 MovieSchema.virtual('averageRating').get(function() {
   var rating = 0;
-  if (!this.reviews || this.reviews.length == 0) {
+  if (!this.reviews) {
     rating = 0;
   } else {
-    this.reviews.map(review => {
-      rating += review.rating;
-    });
-    rating = rating / this.reviews.length;
+    rating = this.reviews / 2;
   }
   return rating;
 });
