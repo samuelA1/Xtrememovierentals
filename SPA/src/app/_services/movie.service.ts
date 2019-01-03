@@ -43,9 +43,4 @@ export class MovieService {
   deleteMovie(movieId: any) {
     return this.http.delete(this.apiUrl + 'admin/movie/' + movieId, {headers: this.headers}).toPromise();
   }
-
-  purchase(order: any) {
-    return this.http.post(this.apiUrl + 'payment', order, {headers: this.headers}).toPromise();
-  }
- 
 }

@@ -13,12 +13,18 @@
           <li routerLinkActive="active">
             <a class="nav-link text-white" [routerLink]="['/']" >Movies</a>
           </li>
-          <li routerLinkActive="active">
-            <a class="nav-link text-white" [routerLink]="['/']" >Genres</a>
-          </li>
+          <div class="btn-group" dropdown>
+              <a id="button-basic" dropdownToggle class="btn dropdown-toggle"
+                      aria-controls="dropdown-basic">Genres
+              </a>
+              <ul id="dropdown-basic" *dropdownMenu class="dropdown-menu"
+                  role="menu" aria-labelledby="button-basic">
+                <li *ngFor="let genre of genres" role="menuitem"><a (click)="setGenreId(genre._id)" class="dropdown-item" [routerLink]="['/genres', genre.name]" >{{genre?.name | titlecase}}</a></li>
+              </ul>
+          </div>
         </ul>
         <form *ngIf="authService.user?.user?.name" class="form-inline input-group w-50 mr-md-auto mt-2 mt-md-0">
-          <input class="form-control mr-sm-5" type="text" placeholder="Search" aria-label="Search">
+          <input class="form-control mr-sm-5" type="text" name="title" [(ngModel)]="movieTitle.title" placeholder="Search" aria-label="Search" (keyup)="openModal(template); searchMovies()">
         </form>
         <div *ngIf="authService.loggedIn" class="dropdown sign">
             <a (click)="toggleSignIn()" class="btn text-white dropdown-toggle" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -38,7 +44,9 @@
             <div class="dropdown-menu" aria-labelledby="dropdownMenuLink" [class.show]="signIn">
               <a class="dropdown-item" (click)="logOut()">Log Out</a>
               <hr>
+              <a class="dropdown-item" [routerLink]="['/orders']">My orders</a>
               <a *ngIf="authService.user?.user?.isAdmin" class="dropdown-item" [routerLink]="['/admin/admin-movies']">Manage movies</a>
+              <a *ngIf="authService.user?.user?.isAdmin" class="dropdown-item" [routerLink]="['/all-orders']">Manage orders</a>
             </div>
           </div>
       </div>
@@ -56,4 +64,27 @@
       <p class="text-center">Made by <strong>Samuel Essim</strong></p>
     </div>
 </footer>
+
+<!-- modal -->
+
+<ng-template #template>
+    <div class="text-center mt-3 text-dark">
+        <div class="form-group">
+            <input class="form-control mr-sm-5 mr-1" type="text" name="title" [(ngModel)]="movieTitle.title" placeholder="Search" aria-label="Search" (keyup)="searchMovies()">
+          </div>
+    </div>
+    <div class="modal-header text-dark">
+      <h4 class="modal-title pull-left">Searched for movie with <span class="text-warning">{{movieTitle.title}}</span> as title</h4>
+      <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body text-dark">
+        <div class="col-md-4" *ngFor="let movie of movies">
+            <div>
+              <a (click)="setId(movie.objectID)" [routerLink]="['/movies', movie.title]" ><img [src]="movie.image" alt="{{movie.title}}" class="ml-4 movie-image mb-4"></a>
+            </div>    
+        </div>
+    </div>
+  </ng-template>
   

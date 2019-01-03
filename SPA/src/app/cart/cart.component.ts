@@ -5,6 +5,7 @@ import { BsModalService } from 'ngx-bootstrap/modal';
 import { BsModalRef } from 'ngx-bootstrap/modal/bs-modal-ref.service';
 import { Component, OnInit, TemplateRef } from '@angular/core';
 import { Router } from '@angular/router';
+import { OrderService } from '../_services/order.service';
 
 @Component({
   selector: 'app-cart',
@@ -18,6 +19,7 @@ card: any = {};
 totalPrice: any = 0;
 modalRef: BsModalRef;
   constructor(private movieService: MovieService,
+     private orderService: OrderService,
      private modalService: BsModalService,
      private authService: AuthService,
      private alertify: AlertifyService,
@@ -61,7 +63,7 @@ modalRef: BsModalRef;
         if (addAddress['success']) {
           order['totalPrice'] = this.totalPrice;
           order['movies'] = this.movies;
-          const orders = await this.movieService.purchase(order);
+          const orders = await this.orderService.purchase(order);
           if (orders['success']) {
             this.alertify.success('Purchase successful');
             this.movies = [];

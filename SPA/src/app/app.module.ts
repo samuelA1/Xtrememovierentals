@@ -1,3 +1,5 @@
+import { AllOrdersComponent } from './admin/all-orders/all-orders.component';
+import { AuthGuard } from './_guards/auth.guard';
 import { PreventChangesGuard } from './_guards/prevent-changes.guard';
 import { MovieService } from './_services/movie.service';
 import { GenreService } from './_services/genre.service';
@@ -19,6 +21,7 @@ import {MatCheckboxModule} from '@angular/material/checkbox';
 import {MatButtonModule} from '@angular/material/button';
 import {MatDividerModule} from '@angular/material/divider';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
+import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { PaginationModule } from 'ngx-bootstrap/pagination';
 import { CarouselModule } from 'ngx-bootstrap/carousel';
 import { RatingModule } from 'ngx-bootstrap/rating';
@@ -39,6 +42,10 @@ import { HomeComponent } from './home/home.component';
 import { LoginComponent } from './login/login.component';
 import { MovieComponent } from './movie/movie.component';
 import { CartComponent } from './cart/cart.component';
+import { OrderComponent } from './order/order.component';
+import { OrderService } from './_services/order.service';
+import { SpecificOrderComponent } from './specific-order/specific-order.component';
+import { GenreComponent } from './genre/genre.component';
 
 
 @NgModule({
@@ -50,8 +57,12 @@ import { CartComponent } from './cart/cart.component';
       AdminEditComponent,
       AdminNewComponent,
       AdminMoviesComponent,
+      AllOrdersComponent,
       MovieComponent,
-      CartComponent
+      CartComponent,
+      OrderComponent,
+      SpecificOrderComponent,
+      GenreComponent
    ],
    imports: [
       BrowserModule,
@@ -70,7 +81,8 @@ import { CartComponent } from './cart/cart.component';
       PaginationModule.forRoot(),
       CarouselModule.forRoot(),
       RatingModule.forRoot(),
-      ModalModule.forRoot()
+      ModalModule.forRoot(),
+      BsDropdownModule.forRoot()
    ],
    providers: [
       AuthService,
@@ -78,7 +90,9 @@ import { CartComponent } from './cart/cart.component';
       AdminGuard,
       GenreService,
       MovieService,
-      PreventChangesGuard
+      OrderService,
+      PreventChangesGuard,
+      AuthGuard
    ],
    bootstrap: [
       AppComponent

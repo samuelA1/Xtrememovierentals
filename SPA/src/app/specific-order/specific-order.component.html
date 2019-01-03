@@ -1,0 +1,17 @@
+<div class="container mt-5">
+  <div class="row">
+    <div class="col-md text-center">
+      <h2 class="text-warning mt-5">Order for {{order?.dateOrdered | date: 'longDate'}}</h2>
+      <h3 class="float-right"><b>${{order?.totalPrice}}</b></h3>
+      <br>
+      <div *ngFor="let movie of order?.movies" class="list-inline mt-5 mb-3">
+          <div class="list-inline-item">
+              <h6>{{movie?.title | titlecase}}</h6>
+              <img [src]="movie.image" alt="{{movie.title}}">
+          </div>
+          <p class="list-inline-item mt-3"><b>${{movie.price}}</b></p>
+      </div>
+      <h3 class="float-right text-warning"><b>${{order?.totalPrice}}</b></h3>
+    </div>
+  </div>
+</div>

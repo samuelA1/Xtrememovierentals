@@ -8,7 +8,8 @@ const OrderSchema = new Schema({
         title: String,
         price: Number,
         image: String,
-    }]
+    }],
+    dateOrdered: {type: Date, default: Date.now}
 });
 
 module.exports = mongoose.model('Order', OrderSchema);

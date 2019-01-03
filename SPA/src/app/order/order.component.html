@@ -1,0 +1,26 @@
+<div class="container">
+  <div class="row">
+    <div class="col-md text-center">
+      <h2 class="text-center text-warning " *ngIf="orders == ''">No orders</h2>
+      <h2 class="text-center text-warning" *ngIf="orders != ''">Orders for {{authService.user?.user.name | titlecase}}</h2>
+      <table *ngIf="orders != ''" class="table">
+        <thead>
+          <tr>
+            <th scope="col">Date of order</th>
+            <th scope="col">Total items ordered</th>
+            <th scope="col">Total price</th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let order of orders">
+            <td>{{order.dateOrdered | date: 'longDate'}}</td>
+            <td>{{order.movies?.length}}</td>
+            <td>${{order.totalPrice}}</td>
+            <td><a [routerLink]="['/orders', order._id]" >view order</a></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

@@ -130,5 +130,40 @@ router.post('/payment', checkJwt, (req, res, next) => {
     });
     });
 
+router.get('/orders', checkJwt, (req, res, next) => {
+    Order.find({owner: req.decoded.user._id}, (err, orders) => {
+        if (err) return next(err);
+
+        res.status(200).json({
+            success: true,
+            orders: orders
+        })
+    })
+});
+
+router.get('/allOrders', [checkJwt, isAdmin], (req, res, next) => {
+    Order.find({}).populate('owner')
+         .exec((err, orders) => {
+            if (err) return next(err);
+
+            res.status(200).json({
+                success: true,
+                orders: orders
+            })
+        })
+});
+
+router.get('/orders/:id', checkJwt, (req, res, next) => {
+    Order.findOne({_id: req.params.id}, (err, order) => {
+        if (err) next(err);
+
+        res.json({
+            success: true,
+            order: order
+        })
+    })
+})
+
+
 
 module.exports = router
