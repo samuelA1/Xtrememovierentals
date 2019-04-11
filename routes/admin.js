@@ -8,8 +8,8 @@ const async = require('async');
 const aws = require('aws-sdk');
 const multer = require('multer');
 const multerS3 = require('multer-s3');
-const s3 = new aws.S3({accessKeyId: 'AKIAJZDTFCF42565X2AA', 
-                       secretAccessKey: '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'});
+const s3 = new aws.S3({accessKeyId: 'AKIA3IJ6IPXYN23YPXVK', 
+                       secretAccessKey: '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'});
                        
 var upload = multer({
     storage: multerS3({
@@ -24,12 +24,12 @@ var upload = multer({
     })
   });
 
-  router.get('/allMovies', [checkJwt, isAdmin], (req, res, next) => {
+  router.get('/allMovies',  (req, res, next) => {
     const page = req.query.page
     const perPage = 10;
     async.parallel([
       function(callback) {
-        Movie.count({owner: req.decoded.user._id}, (err, count) => {
+        Movie.count({}, (err, count) => {
           callback(err, count)
         })
       },
@@ -97,7 +97,7 @@ router.route('/movies')
       if (req.body['2']) movie.genre.push(req.body['2']);
 
       movie.price = req.body.price;
-      if (req.body.price) movie.rentPrice = req.body.price - 2.11
+      if (req.body.price) movie.rentPrice = req.body.price - 2
       movie.description = req.body.description;
       movie.image = req.file.location;
 

@@ -46,6 +46,7 @@ import { OrderComponent } from './order/order.component';
 import { OrderService } from './_services/order.service';
 import { SpecificOrderComponent } from './specific-order/specific-order.component';
 import { GenreComponent } from './genre/genre.component';
+import { AllMoviesComponent } from './all-movies/all-movies.component';
 
 
 @NgModule({
@@ -62,7 +63,8 @@ import { GenreComponent } from './genre/genre.component';
       CartComponent,
       OrderComponent,
       SpecificOrderComponent,
-      GenreComponent
+      GenreComponent,
+      AllMoviesComponent
    ],
    imports: [
       BrowserModule,

@@ -1,3 +1,4 @@
+import { AllMoviesComponent } from './all-movies/all-movies.component';
 import { AllOrdersComponent } from './admin/all-orders/all-orders.component';
 import { AuthGuard } from './_guards/auth.guard';
 import { CartComponent } from './cart/cart.component';
@@ -20,6 +21,7 @@ const routes: Routes = [
   {path: '', component: HomeComponent},
   {path: 'register', component: RegistrationComponent},
   {path: 'login', component: LoginComponent},
+  {path: 'movies', component: AllMoviesComponent},
   {path: 'movies/:name', component:  MovieComponent},
   {path: 'genres/:name', component: GenreComponent},
   {path: 'cart', component: CartComponent},

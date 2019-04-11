@@ -1,6 +1,7 @@
 import { AlertifyService } from './../_services/alertify.service';
 import { GenreService } from './../_services/genre.service';
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-genre',
@@ -9,10 +10,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class GenreComponent implements OnInit {
 movies: any;
-  constructor(private genreService: GenreService, private alertify: AlertifyService) { }
+genreName: any;
+  constructor(private genreService: GenreService, private alertify: AlertifyService, private route: ActivatedRoute) { }
 
   async ngOnInit() {
     await this.getMovie();
+    this.route.params.subscribe(res => this.genreName = res['name'])
   }
 
   async getMovie() {

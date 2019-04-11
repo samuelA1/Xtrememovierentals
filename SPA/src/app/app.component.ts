@@ -58,7 +58,10 @@ export class AppComponent {
 
   setGenreId(genreId: any) {
     localStorage.setItem('genreId', genreId);
-    window.location.reload();
+    setTimeout(() => {
+      window.location.reload();
+  }, 20);
+    
   }
 
   async getGenres() {

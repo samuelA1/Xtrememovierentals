@@ -1,0 +1,14 @@
+<div class="container">
+    <div class="row">
+        <div class="col-md-4" *ngFor="let movie of movies">
+            <div>
+              <a (click)="setId(movie._id)" [routerLink]="['/movies', movie.title]" ><img [src]="movie.image" alt="{{movie.title}}" class="ml-4 movie-image mb-4"></a>
+            </div>  
+        </div>
+    </div>
+    <div class="row">
+        <div class="offset-md-5" >
+            <pagination [totalItems]="totalItems" (pageChanged)="pageChanged($event)" [maxSize]="5"></pagination>
+        </div>  
+    </div>
+  </div>
