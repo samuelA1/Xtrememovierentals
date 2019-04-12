@@ -31,7 +31,7 @@
               Sign In
             </a>
             <a [routerLink]="['/cart']" class="text-white"><i class="fas fa-shopping-cart"><span class="cartNumber" *ngIf="authService.cartNumber">{{authService.cartNumber}}</span></i></a>
-            <div class="dropdown-menu" aria-labelledby="dropdownMenuLink" [class.show]="signIn">
+            <div (click)="toggleSignIn()" class="dropdown-menu" aria-labelledby="dropdownMenuLink" [class.show]="signIn">
               <a class="dropdown-item" [routerLink]="['/login']">Log In</a>
               <a class="dropdown-item" [routerLink]="['/register']">Create Account</a>
             </div>
@@ -41,8 +41,8 @@
               Hi {{authService.user?.user?.name | titlecase}}
             </a>
             <a [routerLink]="['/cart']" class="text-white"><i class="fas fa-shopping-cart"><span class="text-warning" *ngIf="authService.cartNumber">{{authService.cartNumber}}</span></i></a>
-            <div class="dropdown-menu" aria-labelledby="dropdownMenuLink" [class.show]="signIn">
-              <a class="dropdown-item" (click)="logOut()">Log Out</a>
+            <div class="dropdown-menu" (click)="toggleSignIn()" aria-labelledby="dropdownMenuLink" [class.show]="signIn">
+              <a class="dropdown-item" (click)="toggleSignIn()"  (click)="logOut()">Log Out</a>
               <hr>
               <a class="dropdown-item" [routerLink]="['/orders']">My orders</a>
               <a *ngIf="authService.user?.user?.isAdmin" class="dropdown-item" [routerLink]="['/admin/admin-movies']">Manage movies</a>

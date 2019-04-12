@@ -91,7 +91,9 @@ export class AppComponent {
   setId(movieId: any) {
     localStorage.setItem('movieToSee', movieId);
     this.modalRef.hide();
-    window.location.reload();
+    setTimeout(() => {
+      window.location.reload();
+  }, 20);
   }
 
 

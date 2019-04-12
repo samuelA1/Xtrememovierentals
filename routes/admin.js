@@ -26,7 +26,7 @@ var upload = multer({
 
   router.get('/allMovies',  (req, res, next) => {
     const page = req.query.page
-    const perPage = 10;
+    const perPage = 12;
     async.parallel([
       function(callback) {
         Movie.count({}, (err, count) => {

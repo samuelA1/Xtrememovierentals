@@ -5,6 +5,7 @@
        <div><a [routerLink]="['/admin/admin-new']" class="btn btn-secondary mb-3" >
         New movie</a> <a (click)="getMovies()" class="btn btn-warning ml-2 mb-3" >
           Movies added by me</a></div>
+          <p class="float-right font-weight-bold">Total number of movies: <span class="text-primary">{{totalItems}}</span></p>
         <div class="form-group">
             <input type="text" class="form-control" id="title" placeholder="Search movie..." 
             name="title" [(ngModel)]="movie.title" (keyup)="searchMovies()">
